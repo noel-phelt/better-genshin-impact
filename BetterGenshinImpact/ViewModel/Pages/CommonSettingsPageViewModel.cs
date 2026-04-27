@@ -82,7 +82,7 @@ public partial class CommonSettingsPageViewModel : ViewModel
     public ObservableCollection<string> MapPathingTypes { get; } = ["SIFT", "TemplateMatch"];
 
     [ObservableProperty] private FrozenDictionary<string, string> _languageDict =
-        new string[] { "zh-Hans", "zh-Hant", "en"}
+        new string[] { "zh-Hans", "zh-Hant", "en", "ja"}
             .ToFrozenDictionary(
                 c => c,
                 c =>
