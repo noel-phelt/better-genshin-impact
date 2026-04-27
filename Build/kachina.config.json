@@ -1,24 +1,36 @@
 {
   "source": [
     {
-      "id": "github",
+      "id": "dfs",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${VERSION}/Better-Genshin-Impact-${VERSION}.7z"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
     },
     {
       "id": "dfs-alpha",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${VERSION}/Better-Genshin-Impact-${VERSION}.7z"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe",
+      "hidden": true
     },
     {
-      "id": "mirrorc",
+      "id": "github",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${VERSION}/Better-Genshin-Impact-${VERSION}.7z"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
     },
     {
       "id": "cnb",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${VERSION}/Better-Genshin-Impact-${VERSION}.7z"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
+    },
+    {
+      "id": "mirrorc",
+      "name": "GitHub (noel-phelt)",
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
+    },
+    {
+      "id": "mirrorc-alpha",
+      "name": "GitHub (noel-phelt)",
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe",
+      "hidden": true
     }
   ],
   "appName": "BetterGI",
