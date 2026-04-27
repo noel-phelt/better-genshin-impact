@@ -1,4 +1,4 @@
-﻿using BetterGenshinImpact.Core.Config;
+using BetterGenshinImpact.Core.Config;
 using BetterGenshinImpact.Core.Recognition;
 using BetterGenshinImpact.Core.Recognition.OCR;
 using BetterGenshinImpact.Core.Recognition.OpenCv;
@@ -639,9 +639,9 @@ public partial class AutoSkipTrigger : ITaskTrigger
                         var textMat = item.ToImageRegion().SrcMat;
                         if (IsOrangeOption(textMat))
                         {
-                            if (_config.AutoGetDailyRewardsEnabled && (item.Text.Contains("每日") || item.Text.Contains("委托")))
+                            if (_config.AutoGetDailyRewardsEnabled && (item.Text.Contains("每日") || item.Text.Contains("委托") || item.Text.Contains("デイリー") || item.Text.Contains("依頼")))
                             {
-                                ClickOcrRegion(item, "每日委托");
+                                ClickOcrRegion(item, "デイリー依頼");
                                 TaskControl.Sleep(800);
                                 
                                 // 6.2 每日提示确认
@@ -657,11 +657,13 @@ public partial class AutoSkipTrigger : ITaskTrigger
                             else if (_config.AutoReExploreEnabled && (item.Text.Contains("探索") || item.Text.Contains("派遣")))
                             {
                                 ClickOcrRegion(item, "探索派遣");
-                                Thread.Sleep(800); // 等待探索派遣界面打开
+                                Thread.Sleep(800); // 等待探索派遣界面打開
                                 new OneKeyExpeditionTask().Run(_autoSkipAssets);
                             }
                             else if (!item.Text.Contains("每日")
                                 && !item.Text.Contains("委托")
+                                && !item.Text.Contains("デイリー")
+                                && !item.Text.Contains("依頼")
                                 && !item.Text.Contains("探索")
                                 && !item.Text.Contains("派遣"))
                             {
@@ -777,9 +779,9 @@ public partial class AutoSkipTrigger : ITaskTrigger
 
     private void AutoSkipLog(string text)
     {
-        if (text.Contains("每日委托") || text.Contains("探索派遣"))
+        if (text.Contains("每日委托") || text.Contains("探索派遣") || text.Contains("デイリー") || text.Contains("依頼"))
         {
-            _logger.LogInformation("自动剧情：{Text}", text);
+            _logger.LogInformation("自動ストーリー：{Text}", text);
         }
         else if ((DateTime.Now - _prevClickTime).TotalMilliseconds > 1000)
         {

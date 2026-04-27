@@ -1089,7 +1089,7 @@ public class AutoDomainTask : ISoloTask
         // 再 OCR 一次，弹出框，确认当前是否有原粹树脂
         using var ra2 = CaptureToRectArea();
         var textListInPrompt = ra2.FindMulti(RecognitionObject.Ocr(ra2.Width * 0.25, ra2.Height * 0.2, ra2.Width * 0.5, ra2.Height * 0.6));
-        if (textListInPrompt.Any(t => t.Text.Contains("数量不足") || t.Text.Contains("补充原粹树脂")))
+        if (textListInPrompt.Any(t => t.Text.Contains("数量不足") || t.Text.Contains("补充原粹树脂") || t.Text.Contains("個数不足") || t.Text.Contains("天然樹脂を補充")))
         {
             // 没有原粹树脂，直接退出秘境
             Logger.LogInformation("自动秘境：原粹树脂已用尽，退出秘境");
@@ -1284,11 +1284,20 @@ public class AutoDomainTask : ISoloTask
             resinName = "原粹树脂";
         }
 
-        var resinKey = regionList.FirstOrDefault(t => t.Text.Contains(resinName));
+        var jaResinName = resinName switch
+        {
+            "原粹树脂" => "天然樹脂",
+            "浓缩树脂" => "濃縮樹脂",
+            "脆弱树脂" => "脆弱樹脂",
+            "须臾树脂" => "刹那の樹脂",
+            _ => resinName
+        };
+
+        var resinKey = regionList.FirstOrDefault(t => t.Text.Contains(resinName) || t.Text.Contains(jaResinName));
         if (resinKey != null)
         {
             // 找到树脂名称对应的按键，关键词为使用，是同一行的（高度相交）
-            var useList = regionList.Where(t => t.Text.Contains("使用")).ToList();
+            var useList = regionList.Where(t => t.Text.Contains("使用") || t.Text.Contains("使う")).ToList();
             if (useList.Count != 0)
             {
                 // 找到使用按键
@@ -1361,7 +1370,7 @@ public class AutoDomainTask : ISoloTask
 
     private static int GetResinNum(Region region, string resinName)
     {
-        if (resinName == "原粹树脂")
+        if (resinName == "原粹树脂" || resinName == "天然樹脂")
         {
             if (region.Text.Contains("20"))
             {
@@ -1377,7 +1386,8 @@ public class AutoDomainTask : ISoloTask
                 return 20;
             }
         }
-        else if (resinName == "浓缩树脂" || resinName == "脆弱树脂" || resinName == "须臾树脂")
+        else if (resinName == "浓缩树脂" || resinName == "脆弱树脂" || resinName == "须臾树脂" || 
+                 resinName == "濃縮樹脂" || resinName == "脆弱樹脂" || resinName == "刹那の樹脂")
         {
             return 1;
         }

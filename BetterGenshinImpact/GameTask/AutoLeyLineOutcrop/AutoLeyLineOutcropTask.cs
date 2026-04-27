@@ -1,4 +1,4 @@
-﻿using BetterGenshinImpact.Core.Recognition;
+using BetterGenshinImpact.Core.Recognition;
 using BetterGenshinImpact.Core.Recognition.OpenCv;
 using BetterGenshinImpact.Core.Recognition.OCR;
 using BetterGenshinImpact.Core.Config;
@@ -1280,8 +1280,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
         var seekEnemyEnabled = _taskParam.FightConfig.SeekEnemyEnabled;
         var seekEnemyInterval = TimeSpan.FromSeconds(Math.Clamp(_taskParam.FightConfig.SeekEnemyIntervalSeconds, 1, 60));
         var seekEnemyRotaryFactor = Math.Clamp(_taskParam.FightConfig.SeekEnemyRotaryFactor, 1, 13);
-        var successKeywords = new[] { "挑战达成", "战斗胜利", "挑战成功" };
-        var failureKeywords = new[] { "挑战失败" };
+        var successKeywords = new[] { "挑战达成", "战斗胜利", "挑战成功", "挑戦成功", "勝利", "挑戦達成", "挑戦クリア" };
+        var failureKeywords = new[] { "挑战失败", "挑戦失敗" };
 
         while ((DateTime.UtcNow - start).TotalMilliseconds < timeoutMs)
         {
@@ -1391,7 +1391,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
     private static bool ContainsFightText(string text)
     {
         text = NormalizeLeyLineOcrText(text);
-        var keywords = new[] { "打倒", "所有", "敌人" };
+        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐" };
         return keywords.Any(text.Contains);
     }
 
@@ -1566,7 +1566,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
         var list = capture.FindMulti(_ocrRoThis);
         foreach (var res in list)
         {
-            if (res.Text.Contains("复苏", StringComparison.Ordinal))
+            if (res.Text.Contains("复苏", StringComparison.Ordinal) || res.Text.Contains("復活", StringComparison.Ordinal) || res.Text.Contains("蘇生", StringComparison.Ordinal))
             {
                 res.Click();
                 await Delay(2000, _ct);
@@ -1946,7 +1946,10 @@ public class AutoLeyLineOutcropTask : ISoloTask
         text = NormalizeLeyLineOcrText(text);
         return text.Contains("激活地脉之花", StringComparison.Ordinal)
                || text.Contains("选择激活方式", StringComparison.Ordinal)
-               || text.Contains("地脉之花", StringComparison.Ordinal);
+               || text.Contains("地脉之花", StringComparison.Ordinal)
+               || text.Contains("地脈の花を活性化して秘宝を獲得", StringComparison.Ordinal)
+               || text.Contains("地脈の花を活性化", StringComparison.Ordinal)
+               || text.Contains("受け取り方法", StringComparison.Ordinal);
     }
 
     private List<Region> CaptureRewardPromptRegions()
@@ -1985,7 +1988,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
         using var check = CaptureToRectArea();
         var lineTexts = BuildPromptTextLines(check.FindMulti(_ocrRoThis));
-        return lineTexts.Any(text => text.Contains("40", StringComparison.Ordinal) && text.Contains("原粹", StringComparison.Ordinal));
+        return lineTexts.Any(text => text.Contains("40", StringComparison.Ordinal) && (text.Contains("原粹", StringComparison.Ordinal) || text.Contains("天然", StringComparison.Ordinal)));
     }
 
     private static Rect GetRewardPromptTitleRoi(ImageRegion capture)
@@ -2040,13 +2043,16 @@ public class AutoLeyLineOutcropTask : ISoloTask
     {
         text = NormalizeLeyLineOcrText(text);
         return text.Contains("地脉之花", StringComparison.Ordinal)
-               || (text.Contains("地脉", StringComparison.Ordinal) && text.Contains("之花", StringComparison.Ordinal));
+               || (text.Contains("地脉", StringComparison.Ordinal) && text.Contains("之花", StringComparison.Ordinal))
+               || text.Contains("地脈の花に接触する", StringComparison.Ordinal)
+               || text.Contains("地脈の花", StringComparison.Ordinal)
+               || (text.Contains("地脈", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal));
     }
 
     private static bool ContainsRewardPromptActionText(string text)
     {
         text = NormalizeLeyLineOcrText(text);
-        return text.Contains("使用", StringComparison.Ordinal);
+        return text.Contains("使用", StringComparison.Ordinal) || text.Contains("使う", StringComparison.Ordinal);
     }
 
     private static bool ContainsRewardPromptContentText(string text)
@@ -2056,10 +2062,19 @@ public class AutoLeyLineOutcropTask : ISoloTask
                || text.Contains("浓缩树脂", StringComparison.Ordinal)
                || text.Contains("须臾树脂", StringComparison.Ordinal)
                || text.Contains("脆弱树脂", StringComparison.Ordinal)
+               || text.Contains("天然樹脂", StringComparison.Ordinal)
+               || text.Contains("濃縮樹脂", StringComparison.Ordinal)
+               || text.Contains("刹那の樹脂", StringComparison.Ordinal)
+               || text.Contains("脆弱樹脂", StringComparison.Ordinal)
                || text.Contains("激活地脉之花", StringComparison.Ordinal)
                || text.Contains("选择激活方式", StringComparison.Ordinal)
+               || text.Contains("地脈の花を活性化して秘宝を獲得", StringComparison.Ordinal)
+               || text.Contains("地脈の花を活性化", StringComparison.Ordinal)
+               || text.Contains("受け取り方法を選択", StringComparison.Ordinal)
                || (text.Contains("树脂", StringComparison.Ordinal) && text.Contains("使用", StringComparison.Ordinal))
-               || text.Contains("补充", StringComparison.Ordinal);
+               || (text.Contains("樹脂", StringComparison.Ordinal) && text.Contains("使用", StringComparison.Ordinal))
+               || text.Contains("补充", StringComparison.Ordinal)
+               || text.Contains("補充", StringComparison.Ordinal);
     }
 
     private static List<Region> MergeTextRegionsByLine(Region owner, IEnumerable<Region> regions)
@@ -2223,7 +2238,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
         GameCaptureRegion.GameRegion1080PPosClick(500, 500);
         await Delay(1000, _ct);
 
-        if (type == "启示之花")
+        if (type == "启示之花" || type == "啓示の花")
         {
             GameCaptureRegion.GameRegion1080PPosClick(700, 350);
         }
@@ -2252,10 +2267,27 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
     private async Task FindAndClickCountry(string country)
     {
-        var match = country == "挪德卡莱" ? "挪德卡" : country;
+        var match = country;
+        if (country == "蒙德" || country == "モンド") match = "蒙德"; 
+        else if (country == "璃月") match = "璃月";
+        else if (country == "稻妻" || country == "稲妻") match = "稻妻";
+        else if (country == "须弥" || country == "スメール") match = "须弥";
+        else if (country == "枫丹" || country == "フォンテーヌ") match = "枫丹";
+        else if (country == "纳塔" || country == "ナタ") match = "纳塔";
+        else if (country == "挪德卡莱" || country == "ナド・クライ" || country == "ナドクライ") match = "挪德卡"; 
+        
         using var capture = CaptureToRectArea();
         var list = capture.FindMulti(_ocrRoThis);
-        var target = list.FirstOrDefault(r => r.Text.Contains(match, StringComparison.Ordinal));
+        var target = list.FirstOrDefault(r => 
+            r.Text.Contains(match, StringComparison.Ordinal) || 
+            r.Text.Contains(country, StringComparison.Ordinal) ||
+            (country == "モンド" && r.Text.Contains("蒙德")) ||
+            (country == "稲妻" && (r.Text.Contains("稲妻") || r.Text.Contains("稻妻"))) ||
+            (country == "スメール" && r.Text.Contains("须弥")) ||
+            (country == "フォンテーヌ" && r.Text.Contains("枫丹")) ||
+            (country == "ナタ" && r.Text.Contains("纳塔")) ||
+            ((country == "ナド・クライ" || country == "ナドクライ") && (r.Text.Contains("ナド") || r.Text.Contains("挪德卡")))
+        );
         if (target == null)
         {
             throw new Exception($"冒险之证未找到国家: {country}");
@@ -2313,14 +2345,17 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
         using var capture = CaptureToRectArea();
         var list = capture.FindMulti(_ocrRoThis);
-        var stop = list.FirstOrDefault(r => r.Text.Contains("停止", StringComparison.Ordinal));
+        var stop = list.FirstOrDefault(r => r.Text.Contains("停止", StringComparison.Ordinal) || r.Text.Contains("中止", StringComparison.Ordinal));
         if (stop != null)
         {
             stop.Click();
             return;
         }
 
-        var leyLine = list.FirstOrDefault(r => r.Text.Contains("地脉", StringComparison.Ordinal) || r.Text.Contains("衍出", StringComparison.Ordinal));
+        var leyLine = list.FirstOrDefault(r => 
+            r.Text.Contains("地脉", StringComparison.Ordinal) || 
+            r.Text.Contains("地脈", StringComparison.Ordinal) || 
+            r.Text.Contains("衍出", StringComparison.Ordinal));
         if (leyLine != null)
         {
             leyLine.Click();
