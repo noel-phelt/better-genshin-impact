@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BetterGenshinImpact.View.Pages.OneDragon.MailPage"
+<UserControl x:Class="BetterGenshinImpact.View.Pages.OneDragon.MailPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,20 +13,20 @@
         <TextBlock Margin="0,0,0,10"
                    FontSize="15"
                    FontWeight="Bold"
-                   Text="{Binding Title}" />
+                   Text="{Binding Title, Converter={StaticResource TrConverter}, Mode=OneWay}" />
 
         <ui:ToggleSwitch Margin="0,0,0,10"
-                         Content="领取所有邮件"
+                         Content="{Binding Source='领取所有邮件', Converter={StaticResource TrConverter}, Mode=OneWay}"
                          IsChecked="{Binding CollectAllMail}" />
 
         <ui:ToggleSwitch Margin="0,0,0,10"
-                         Content="领取附件"
+                         Content="{Binding Source='领取附件', Converter={StaticResource TrConverter}, Mode=OneWay}"
                          IsChecked="{Binding CollectAttachments}" />
 
         <ui:NumberBox Margin="0,0,0,10"
                       Maximum="100"
                       Minimum="1"
-                      PlaceholderText="最大领取邮件数量"
+                      PlaceholderText="{Binding Source='最大领取邮件数量', Converter={StaticResource TrConverter}, Mode=OneWay}"
                       Value="{Binding MaxMailsToCollect}" />
     </StackPanel>
 </UserControl>

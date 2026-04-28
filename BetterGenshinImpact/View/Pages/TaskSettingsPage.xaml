@@ -2350,7 +2350,13 @@
                               Width="120"
                               Margin="0,0,36,0"
                               ItemsSource="{Binding Source={x:Static pages:TaskSettingsPageViewModel.LeyLineOutcropCountryList}}"
-                              SelectedItem="{Binding Config.AutoLeyLineOutcropConfig.Country, Mode=TwoWay}" />
+                              SelectedItem="{Binding Config.AutoLeyLineOutcropConfig.Country, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource TrConverter}, Mode=OneWay}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
                 <Grid Margin="16">
                     <Grid.RowDefinitions>

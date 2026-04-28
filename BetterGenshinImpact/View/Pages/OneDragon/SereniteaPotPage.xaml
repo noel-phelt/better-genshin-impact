@@ -13,7 +13,7 @@
         <TextBlock Margin="0,0,0,10"
                    FontSize="15"
                    FontWeight="Bold"
-                   Text="{Binding Title}" />
+                   Text="{Binding Title, Converter={StaticResource TrConverter}, Mode=OneWay}" />
 
         <!-- 在这里添加SereniteaPotViewModel特定的控件 -->
     </StackPanel>

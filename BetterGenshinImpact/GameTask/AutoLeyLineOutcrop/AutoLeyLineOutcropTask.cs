@@ -2267,33 +2267,32 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
     private async Task FindAndClickCountry(string country)
     {
-        var match = country;
-        if (country == "蒙德" || country == "モンド") match = "蒙德"; 
-        else if (country == "璃月") match = "璃月";
-        else if (country == "稻妻" || country == "稲妻") match = "稻妻";
-        else if (country == "须弥" || country == "スメール") match = "须弥";
-        else if (country == "枫丹" || country == "フォンテーヌ") match = "枫丹";
-        else if (country == "纳塔" || country == "ナタ") match = "纳塔";
-        else if (country == "挪德卡莱" || country == "ナド・クライ" || country == "ナドクライ") match = "挪德卡"; 
-        
+        // 判定に使用するキーワードリスト（日本語と中国語の両方を含める）
+        var keywords = new List<string> { country };
+        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド" });
+        else if (country == "璃月") keywords.AddRange(new[] { "璃月" });
+        else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻" });
+        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール" });
+        else if (country == "枫丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "フォンテーヌ" });
+        else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ" });
+        else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド・クライ", "ナドクライ" });
+
         using var capture = CaptureToRectArea();
         var list = capture.FindMulti(_ocrRoThis);
+        
+        // いずれかのキーワードが画面上のテキストに含まれている要素を探す
         var target = list.FirstOrDefault(r => 
-            r.Text.Contains(match, StringComparison.Ordinal) || 
-            r.Text.Contains(country, StringComparison.Ordinal) ||
-            (country == "モンド" && r.Text.Contains("蒙德")) ||
-            (country == "稲妻" && (r.Text.Contains("稲妻") || r.Text.Contains("稻妻"))) ||
-            (country == "スメール" && r.Text.Contains("须弥")) ||
-            (country == "フォンテーヌ" && r.Text.Contains("枫丹")) ||
-            (country == "ナタ" && r.Text.Contains("纳塔")) ||
-            ((country == "ナド・クライ" || country == "ナドクライ") && (r.Text.Contains("ナド") || r.Text.Contains("挪德卡")))
+            keywords.Any(k => r.Text.Contains(k, StringComparison.OrdinalIgnoreCase))
         );
+
         if (target == null)
         {
-            throw new Exception($"冒险之证未找到国家: {country}");
+            throw new Exception($"冒险之证未找到国家: {country} (検索キーワード: {string.Join(", ", keywords)})");
         }
 
         target.Click();
+        await Delay(1000, _ct);
+    }
     }
 
     private async Task<bool> TryOpenBigMapFromHandbook()
