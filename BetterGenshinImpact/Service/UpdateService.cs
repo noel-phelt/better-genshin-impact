@@ -1,4 +1,4 @@
-﻿using BetterGenshinImpact.Core.Config;
+using BetterGenshinImpact.Core.Config;
 using BetterGenshinImpact.Helpers;
 using BetterGenshinImpact.Helpers.Http;
 using BetterGenshinImpact.Model;
@@ -126,18 +126,9 @@ public class UpdateService : IUpdateService
 
                     case CheckUpdateWindow.CheckUpdateWindowButton.Update:
                     {
-                        // 唤起更新程序
-                        string updaterExePath = Global.Absolute("BetterGI.update.exe");
-                        if (!File.Exists(updaterExePath))
-                        {
-                            await ThemedMessageBox.ErrorAsync("更新程序不存在，请选择其他更新方式！");
-                            return;
-                        }
-
-                        // 启动
-                        Process.Start(updaterExePath, "-I");
-
-                        // 退出程序
+                        // Because the Kachina updater requires an OTA server with metadata.json,
+                        // and we only have GitHub Releases, we fallback to opening the browser.
+                        Process.Start(new ProcessStartInfo("https://github.com/noel-phelt/better-genshin-impact/releases/latest") { UseShellExecute = true });
                         Application.Current.Shutdown();
                     }
                         break;
@@ -165,14 +156,22 @@ public class UpdateService : IUpdateService
 
     private async Task<string> GetLatestVersionAsync(UpdateOption option)
     {
-        if (option.Channel == UpdateChannel.Stable)
+        try
         {
-            return await UpdateFromOss();
+            using HttpClient httpClient = new();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+            string jsonString = await httpClient.GetStringAsync("https://api.github.com/repos/noel-phelt/better-genshin-impact/releases/latest");
+            var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
+            if (jsonDict != null && jsonDict.TryGetValue("tag_name", out var tagObj) && tagObj is string tag)
+            {
+                return tag.TrimStart('v');
+            }
         }
-        else
+        catch (Exception e)
         {
-            return await UpdateFromMirrorChyan();
+            _logger.LogWarning(e, "GitHub APIからのバージョン取得に失敗しました。");
         }
+        return string.Empty;
     }
 
     /// <summary>
@@ -301,7 +300,7 @@ public class UpdateService : IUpdateService
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
             string jsonString =
                 await httpClient.GetStringAsync(
-                    "https://api.github.com/repos/babalae/better-genshin-impact/releases/latest");
+                    "https://api.github.com/repos/noel-phelt/better-genshin-impact/releases/latest");
             var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
 
             if (jsonDict != null)
