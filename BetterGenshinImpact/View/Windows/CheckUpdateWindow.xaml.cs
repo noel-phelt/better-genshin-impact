@@ -217,9 +217,16 @@ public partial class CheckUpdateWindow : FluentWindow
     /// </summary>
     private async Task RunUpdaterAsync(string parameters)
     {
-        // Because the Kachina updater requires an OTA server with metadata.json,
-        // and we only have GitHub Releases, we fallback to opening the browser.
-        Process.Start(new ProcessStartInfo("https://github.com/noel-phelt/better-genshin-impact/releases/latest") { UseShellExecute = true });
+        // 唤起更新程序
+        string updaterExePath = Global.Absolute("BetterGI.update.exe");
+        if (!File.Exists(updaterExePath))
+        {
+            await ThemedMessageBox.ErrorAsync("更新程序不存在，请选择其他更新方式！");
+            return;
+        }
+
+        // 启动
+        Process.Start(updaterExePath, parameters);
 
         // 退出程序
         Application.Current.Shutdown();
