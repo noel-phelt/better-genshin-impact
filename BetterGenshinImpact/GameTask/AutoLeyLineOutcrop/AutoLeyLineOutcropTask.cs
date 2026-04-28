@@ -2293,7 +2293,6 @@ public class AutoLeyLineOutcropTask : ISoloTask
         target.Click();
         await Delay(1000, _ct);
     }
-    }
 
     private async Task<bool> TryOpenBigMapFromHandbook()
     {
