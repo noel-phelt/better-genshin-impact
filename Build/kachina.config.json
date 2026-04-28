@@ -3,33 +3,33 @@
     {
       "id": "dfs",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/${version}/BetterGI.Install.${version}.exe"
     },
     {
       "id": "dfs-alpha",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe",
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/${version}/BetterGI.Install.${version}.exe",
       "hidden": true
     },
     {
       "id": "github",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/${version}/BetterGI.Install.${version}.exe"
     },
     {
       "id": "cnb",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/${version}/BetterGI.Install.${version}.exe"
     },
     {
       "id": "mirrorc",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe"
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/${version}/BetterGI.Install.${version}.exe"
     },
     {
       "id": "mirrorc-alpha",
       "name": "GitHub (noel-phelt)",
-      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/v${version}/Better-Genshin-Impact-${version}-Installer-Win-x64.exe",
+      "uri": "https://github.com/noel-phelt/better-genshin-impact/releases/download/${version}/BetterGI.Install.${version}.exe",
       "hidden": true
     }
   ],
