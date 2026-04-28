@@ -163,14 +163,14 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="{Binding Source='显示日志窗口', Converter={StaticResource TrConverter}}"
+                                  Text="{Binding Source='显示日志窗口', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        <Run Text="{Binding Source='在遮罩内显示日志窗口，', Converter={StaticResource TrConverter}}" /><Hyperlink Command="{Binding GoToLogFolderCommand}" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}">
-                            <Run Text="{Binding Source='点击打开日志文件夹', Converter={StaticResource TrConverter}}" />
+                        <Run Text="{Binding Source='在遮罩内显示日志窗口，', Converter={StaticResource TrConverter}, Mode=OneWay}" /><Hyperlink Command="{Binding GoToLogFolderCommand}" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}">
+                            <Run Text="{Binding Source='点击打开日志文件夹', Converter={StaticResource TrConverter}, Mode=OneWay}" />
                         </Hyperlink>
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
