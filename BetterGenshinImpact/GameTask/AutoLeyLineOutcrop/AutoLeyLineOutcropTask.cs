@@ -2035,6 +2035,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
             .Replace("樹", "树", StringComparison.Ordinal)
             .Replace("選", "选", StringComparison.Ordinal)
             .Replace("擇", "择", StringComparison.Ordinal)
+            .Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Replace("\u3000", string.Empty, StringComparison.Ordinal)
             .Replace("\r", string.Empty, StringComparison.Ordinal)
             .Trim();
     }
@@ -2282,7 +2284,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
         
         // いずれかのキーワードが画面上のテキストに含まれている要素を探す
         var target = list.FirstOrDefault(r => 
-            keywords.Any(k => r.Text.Contains(k, StringComparison.OrdinalIgnoreCase))
+            keywords.Any(k => NormalizeLeyLineOcrText(r.Text).Contains(k, StringComparison.OrdinalIgnoreCase))
         );
 
         if (target == null)
@@ -2343,7 +2345,11 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
         using var capture = CaptureToRectArea();
         var list = capture.FindMulti(_ocrRoThis);
-        var stop = list.FirstOrDefault(r => r.Text.Contains("停止", StringComparison.Ordinal) || r.Text.Contains("中止", StringComparison.Ordinal));
+        var stop = list.FirstOrDefault(r => 
+        {
+            var text = NormalizeLeyLineOcrText(r.Text);
+            return text.Contains("停止", StringComparison.Ordinal) || text.Contains("中止", StringComparison.Ordinal);
+        });
         if (stop != null)
         {
             stop.Click();
@@ -2351,9 +2357,12 @@ public class AutoLeyLineOutcropTask : ISoloTask
         }
 
         var leyLine = list.FirstOrDefault(r => 
-            r.Text.Contains("地脉", StringComparison.Ordinal) || 
-            r.Text.Contains("地脈", StringComparison.Ordinal) || 
-            r.Text.Contains("衍出", StringComparison.Ordinal));
+        {
+            var text = NormalizeLeyLineOcrText(r.Text);
+            return text.Contains("地脉", StringComparison.Ordinal) || 
+                   text.Contains("地脈", StringComparison.Ordinal) || 
+                   text.Contains("衍出", StringComparison.Ordinal);
+        });
         if (leyLine != null)
         {
             leyLine.Click();
