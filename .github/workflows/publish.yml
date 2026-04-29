@@ -18,9 +18,9 @@ on:
           - dev
       create-release:
         type: boolean
-        description: '创建 GitHub Release 草稿'
+        description: 'GitHub Release を作成して公開する'
         required: true
-        default: false
+        default: true
       upload-to-steambird:
         type: boolean
         description: '上传到 Steambird'
@@ -360,7 +360,7 @@ jobs:
         with:
           tag_name: ${{ needs.validate.outputs.version }}
           name: BetterGI v${{ needs.validate.outputs.version }}
-          draft: true
+          draft: false
           prerelease: ${{ contains(needs.validate.outputs.version, '-') }}
           fail_on_unmatched_files: true
           files: |
