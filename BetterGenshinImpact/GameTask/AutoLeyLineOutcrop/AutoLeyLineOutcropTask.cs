@@ -1311,8 +1311,10 @@ public class AutoLeyLineOutcropTask : ISoloTask
             if (!foundText)
             {
                 noTextCount++;
-                if (noTextCount >= 10)
+                // 日本語環境での不安定さを考慮し、10回（約5〜10秒）連続で文字が見つからない場合のみ終了とする
+                if (noTextCount >= 20)
                 {
+                    _logger.LogDebug("連続して戦闘テキストが見つからないため、戦闘終了と判断します");
                     return false;
                 }
             }
@@ -1392,7 +1394,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
     {
         text = NormalizeLeyLineOcrText(text);
         var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す", "挑戦", "挑戦中", "倒" };
-        return keywords.Any(text.Contains);
+        // 「0/1」や「1/10」などの進行度表示（数字 + スラッシュ）も戦闘中とみなす
+        return keywords.Any(text.Contains) || Regex.IsMatch(text, @"\d+/");
     }
 
     private async Task AutoNavigateToReward()
