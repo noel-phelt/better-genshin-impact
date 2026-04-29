@@ -429,7 +429,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
             }
 
             var optimal = SelectOptimalPath(paths);
-            await ExecutePath(optimal);
+            var success = await ExecutePath(optimal);
+            if (!success) return;
             _currentRunTimes++;
 
             if (_currentRunTimes >= _taskParam.Count)
@@ -456,7 +457,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
                         TargetNode = nextNode,
                         Routes = [next.Route]
                     };
-                    await ExecutePath(path);
+                    var success = await ExecutePath(path);
+                    if (!success) return;
                     _currentRunTimes++;
                     currentNode = nextNode;
                 }
@@ -494,7 +496,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
                         TargetNode = selected.Value.Node,
                         Routes = [selected.Value.Route]
                     };
-                    await ExecutePath(path);
+                    var success = await ExecutePath(path);
+                    if (!success) return;
                     _currentRunTimes++;
                     currentNode = selected.Value.Node;
                 }
@@ -679,7 +682,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
         return paths.OrderBy(p => p.Routes.Count).First();
     }
 
-    private async Task ExecutePath(PathInfo path)
+    private async Task<bool> ExecutePath(PathInfo path)
     {
         foreach (var routePath in path.Routes)
         {
@@ -701,6 +704,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
         await TryScanDropsAfterReward();
         _consecutiveFailureCount = 0;
+        return true;
     }
 
     private static string BuildTargetRoute(string routePath)
