@@ -334,6 +334,19 @@ public class GameLoadingTrigger : ITaskTrigger
             return;
         }
 
+        // OCR fallback for Japanese and English clients
+        if (_latestLoadingOcrRegions.Any(region =>
+                region.Text.Contains("開始") || region.Text.Contains("开始") ||
+                region.Text.Contains("Begin", StringComparison.OrdinalIgnoreCase) ||
+                region.Text.Contains("START", StringComparison.OrdinalIgnoreCase) ||
+                region.Text.Contains("クリック")))
+        {
+            TaskContext.Instance().PostMessageSimulator.LeftButtonClickBackground();
+            biliLoginClicked = true;
+            _logger.LogInformation("OCRにより「開始」ボタンを検出し、自動クリックしました");
+            return;
+        }
+
         // 只有在"进入游戏"按钮未出现时，才进行B服登录处理
         if (IsBili && !biliLoginClicked)
         {
