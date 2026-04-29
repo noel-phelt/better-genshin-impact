@@ -686,7 +686,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
         var rewardSuccess = await AttemptReward();
         if (!rewardSuccess)
         {
-            throw new Exception("无法领取奖励");
+            _logger.LogInformation("樹脂不足または報酬受け取りをスキップしたため、タスクを終了します");
+            return false;
         }
 
         await TryScanDropsAfterReward();

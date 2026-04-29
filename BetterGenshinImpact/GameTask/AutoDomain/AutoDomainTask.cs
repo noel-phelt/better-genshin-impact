@@ -1306,12 +1306,23 @@ public class AutoDomainTask : ISoloTask
             
             // 1. 尝试寻找独立的“使用”按钮
             var useList = regionList.Where(t => t.Text.Contains("使用") || t.Text.Contains("使う") || t.Text.Contains("つかう") || t.Text.Contains("使") || t.Text.Contains("決")).ToList();
+            var refillList = regionList.Where(t => t.Text.Contains("補充") || t.Text.Contains("不足") || t.Text.Contains("补充")).ToList();
+            
             var useKey = useList.FirstOrDefault(t => t.X > TaskContext.Instance().SystemInfo.ScaleMax1080PCaptureRect.Width / 2
                                                      && IsHeightOverlap(t, resinKey)
-                                                     && t != resinKey); // 排除掉自身
+                                                     && t != resinKey);
 
             if (useKey == null)
             {
+                // 检查是否是“補充”（樹脂不足）
+                var refillKey = refillList.FirstOrDefault(t => t.X > TaskContext.Instance().SystemInfo.ScaleMax1080PCaptureRect.Width / 2
+                                                              && IsHeightOverlap(t, resinKey));
+                if (refillKey != null)
+                {
+                    Logger.LogInformation("检测到 {ResinName} 不足（显示为補充），准备停止", resinName);
+                    return (false, 0);
+                }
+
                 // 2. 如果没找到独立按钮，检查“使用”文字是否已经合并在名称所在的区域中
                 if (resinKey.Text.Contains("使用") || resinKey.Text.Contains("使う") || resinKey.Text.Contains("使") || resinKey.Text.Contains("決"))
                 {
