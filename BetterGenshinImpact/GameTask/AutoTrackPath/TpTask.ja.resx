@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="尘歌壶" xml:space="preserve">
+    <value>塵歌壺</value>
+  </data>
+  <data name="挪德卡莱" xml:space="preserve">
+    <value>ナド・クライ</value>
+  </data>
+  <data name="枫丹" xml:space="preserve">
+    <value>フォンテーヌ</value>
+  </data>
+  <data name="璃月" xml:space="preserve">
+    <value>璃月</value>
+  </data>
+  <data name="稻妻" xml:space="preserve">
+    <value>稲妻</value>
+  </data>
+  <data name="纳塔" xml:space="preserve">
+    <value>ナタ</value>
+  </data>
+  <data name="蒙德" xml:space="preserve">
+    <value>モンド</value>
+  </data>
+  <data name="须弥" xml:space="preserve">
+    <value>スメール</value>
+  </data>
+  <data name="提瓦特大陆" xml:space="preserve">
+    <value>テイワット</value>
+  </data>
+  <data name="层岩巨渊" xml:space="preserve">
+    <value>層岩巨淵</value>
+  </data>
+  <data name="渊下宫" xml:space="preserve">
+    <value>淵下宮</value>
+  </data>
+  <data name="旧日之海" xml:space="preserve">
+    <value>旧日海</value>
+  </data>
+  <data name="远古圣山" xml:space="preserve">
+    <value>遠古の聖山</value>
+  </data>
+  <data name="空之神殿" xml:space="preserve">
+    <value>空の神殿</value>
+  </data>
+</root>
