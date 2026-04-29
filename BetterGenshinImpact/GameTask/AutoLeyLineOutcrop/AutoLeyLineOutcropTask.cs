@@ -949,7 +949,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
             Simulation.SendInput.SimulateAction(GIActions.PickUpOrInteract);
             await Delay(500, _ct);
         }
-        else if (!ContainsFightText(result1Text))
+        else if (!ContainsFightText(result1Text) && !ContainsFightText(result2Text))
         {
             var recoverPath = retries == 0
                 ? targetPath
