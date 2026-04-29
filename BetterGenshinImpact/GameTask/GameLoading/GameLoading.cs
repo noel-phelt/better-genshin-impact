@@ -263,7 +263,7 @@ public class GameLoadingTrigger : ITaskTrigger
             return;
         }
 
-        if ((DateTime.Now - _prevAgePromptOcrTime).TotalMilliseconds >= 1000)
+        if ((DateTime.Now - _prevAgePromptOcrTime).TotalMilliseconds >= 500)
         {
             _prevAgePromptOcrTime = DateTime.Now;
             _latestLoadingOcrRegions = content.CaptureRectArea.FindMulti(RecognitionObject.OcrThis);
@@ -340,14 +340,27 @@ public class GameLoadingTrigger : ITaskTrigger
                 region.Text.Contains("進む") || region.Text.Contains("進") ||
                 region.Text.Contains("Begin", StringComparison.OrdinalIgnoreCase) ||
                 region.Text.Contains("START", StringComparison.OrdinalIgnoreCase) ||
-                region.Text.Contains("クリック") || region.Text.Contains("タップ"));
+                region.Text.Contains("クリック") || region.Text.Contains("タップ") ||
+                region.Text.Contains("Click", StringComparison.OrdinalIgnoreCase) ||
+                region.Text.Contains("Tap", StringComparison.OrdinalIgnoreCase) ||
+                region.Text.Contains("門") || region.Text.Contains("扉") ||
+                region.Text.Contains("进入") || region.Text.Contains("Enter", StringComparison.OrdinalIgnoreCase));
 
         if (startRegion != null)
         {
             startRegion.Click();
             biliLoginClicked = true;
-            _logger.LogInformation("OCRにより「開始」ボタンを検出し、自動クリックしました");
+            _logger.LogInformation("OCRにより「開始」ボタン（{Text}）を検出し、自動クリックしました", startRegion.Text);
             return;
+        }
+
+        // Fallback: If no specific button text is found, but we are likely on the loading screen (judged by other elements)
+        // Try clicking center area to pass the "door" screen
+        if (!ra.IsEmpty() || _latestLoadingOcrRegions.Any(r => r.Text.Contains("16+") || r.Text.Contains("12+")))
+        {
+             _logger.LogInformation("扉画面の可能性が高いため、中央クリックを試行します");
+             GameCaptureRegion.GameRegion1080PPosClick(960, 540);
+             return;
         }
 
         // 只有在"进入游戏"按钮未出现时，才进行B服登录处理
