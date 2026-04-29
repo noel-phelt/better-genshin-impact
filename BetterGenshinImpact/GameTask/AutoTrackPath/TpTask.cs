@@ -1,4 +1,4 @@
-﻿using BetterGenshinImpact.Core.Recognition;
+using BetterGenshinImpact.Core.Recognition;
 using BetterGenshinImpact.Core.Recognition.OpenCv;
 using BetterGenshinImpact.Core.Script.Dependence;
 using BetterGenshinImpact.Core.Simulator;
@@ -1083,6 +1083,19 @@ public class TpTask
             ra.Click();
             hasTeleportButton = true;
         });
+
+        // 日本語環境用フォールバック：OCRで「テレポート」ボタンを探す
+        if (!hasTeleportButton)
+        {
+            var ocrList = imageRegion.FindMulti(RecognitionObject.Ocr(_assets.TeleportButtonRo.RegionOfInterest));
+            var tpBtn = ocrList.FirstOrDefault(r => r.Text.Contains("テレポート") || r.Text.Contains("传送") || r.Text.Contains("Teleport"));
+            if (tpBtn != null)
+            {
+                tpBtn.Click();
+                hasTeleportButton = true;
+            }
+        }
+
         return hasTeleportButton;
     }
 

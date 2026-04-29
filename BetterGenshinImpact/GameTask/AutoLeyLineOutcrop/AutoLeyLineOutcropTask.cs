@@ -941,9 +941,9 @@ public class AutoLeyLineOutcropTask : ISoloTask
             }
         }
 
-        if (result2Text.Contains("溢口", StringComparison.Ordinal))
+        if (result2Text.Contains("溢口", StringComparison.Ordinal) || result2Text.Contains("あふれ口", StringComparison.Ordinal) || result2Text.Contains("地豚", StringComparison.Ordinal))
         {
-            _logger.LogDebug("识别到溢口提示，尝试交互");
+            _logger.LogDebug("識別到溢口或あふれ口提示，嘗試交互");
             Simulation.SendInput.SimulateAction(GIActions.PickUpOrInteract);
             await Delay(300, _ct);
             Simulation.SendInput.SimulateAction(GIActions.PickUpOrInteract);
@@ -1391,7 +1391,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
     private static bool ContainsFightText(string text)
     {
         text = NormalizeLeyLineOcrText(text);
-        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐" };
+        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す" };
         return keywords.Any(text.Contains);
     }
 
@@ -2048,7 +2048,13 @@ public class AutoLeyLineOutcropTask : ISoloTask
                || (text.Contains("地脉", StringComparison.Ordinal) && text.Contains("之花", StringComparison.Ordinal))
                || text.Contains("地脈の花に接触する", StringComparison.Ordinal)
                || text.Contains("地脈の花", StringComparison.Ordinal)
-               || (text.Contains("地脈", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal));
+               || text.Contains("地脈あふれ口", StringComparison.Ordinal)
+               || text.Contains("あふれ口", StringComparison.Ordinal)
+               || (text.Contains("地脈", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal))
+               || text.Contains("地豚の花", StringComparison.Ordinal)
+               || text.Contains("地豚あふれ口", StringComparison.Ordinal)
+               || (text.Contains("地豚", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal))
+               || text.Contains("接触", StringComparison.Ordinal);
     }
 
     private static bool ContainsRewardPromptActionText(string text)
