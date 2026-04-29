@@ -1395,7 +1395,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
     private static bool ContainsFightText(string text)
     {
         text = NormalizeLeyLineOcrText(text);
-        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す", "挑戦", "挑戦中", "倒", "到", "/", "0/", "1/", "2/", "3/", "4/", "5/", "6/", "7/", "8/", "9/" };
+        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す", "挑戦", "挑戦中", "倒", "到", "Lv", "Lv.", "L v", "/", "0/", "1/", "2/", "3/", "4/", "5/", "6/", "7/", "8/", "9/" };
         // スラッシュが含まれている、またはキーワードが含まれている場合に戦闘中とみなす
         return keywords.Any(text.Contains) || Regex.IsMatch(text, @"\d+/");
     }
