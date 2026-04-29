@@ -1391,7 +1391,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
     private static bool ContainsFightText(string text)
     {
         text = NormalizeLeyLineOcrText(text);
-        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す" };
+        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す", "挑戦", "挑戦中", "倒" };
         return keywords.Any(text.Contains);
     }
 
