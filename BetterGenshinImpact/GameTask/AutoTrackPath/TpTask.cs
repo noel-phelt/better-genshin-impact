@@ -1084,11 +1084,16 @@ public class TpTask
             hasTeleportButton = true;
         });
 
-        // 日本語環境用フォールバック：OCRで「テレポート」ボタンを探す
+        // 日本語環境用フォールバック：OCRで「ワープ」ボタンを探す
         if (!hasTeleportButton)
         {
             var ocrList = imageRegion.FindMulti(RecognitionObject.Ocr(_assets.TeleportButtonRo.RegionOfInterest));
-            var tpBtn = ocrList.FirstOrDefault(r => r.Text.Contains("テレポート") || r.Text.Contains("传送") || r.Text.Contains("Teleport"));
+            // 日本語の「ワープ」やその読み取りミス、および各言語のキーワードで判定
+            var tpBtn = ocrList.FirstOrDefault(r => 
+                r.Text.Contains("ワープ") || r.Text.Contains("ワー") || 
+                r.Text.Contains("ープ") || r.Text.Contains("ワーブ") ||
+                r.Text.Contains("テレポート") || r.Text.Contains("テレポ") || 
+                r.Text.Contains("传送") || r.Text.Contains("Teleport"));
             if (tpBtn != null)
             {
                 tpBtn.Click();
