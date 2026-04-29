@@ -2328,23 +2328,21 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
                 if (targetIndex != -1 && targetIndex != anchorIndex)
                 {
-                    // 基準点との距離を計算（1080pでのボタン間隔は約70px）
-                    // 実際の間隔を基準点の高さから推測する（より正確にするため）
+                    // 基準点との距離を計算
                     double step = anchor.Height * 1.5; // おおよその間隔
                     if (liyue != null && inazuma != null)
                     {
-                        step = Math.Abs(inazuma.Y - liyue.Y);
+                        step = (double)Math.Abs(inazuma.Y - liyue.Y) / Math.Abs(4 - 3);
                     }
 
                     int delta = targetIndex - anchorIndex;
-                    int targetY = (int)(anchor.Y + (delta * step));
-                    _logger.LogInformation("OCRで'{Country}'が見つからないため、基準点'{Anchor}'からの相対座標をクリックします (Index: {TargetIndex})", country, anchor.Text, targetIndex);
+                    int relativeY = (int)(delta * step);
                     
-                    // 基準点の中心X座標を使用
-                    int targetX = anchor.X + (anchor.Width / 2);
+                    _logger.LogInformation("OCRで'{Country}'が見つからないため、基準点'{Anchor}'からの相対座標をクリックします (Index: {TargetIndex}, DeltaY: {DeltaY})", country, anchor.Text, targetIndex, relativeY);
                     
-                    // 一時的なRegionを作成してクリック
-                    using var fallbackTarget = new Region(targetX - 50, targetY - 20, 100, 40);
+                    // 基準点から相対的な位置にRegionを派生させてクリック
+                    // Xは中央、Yは計算した相対位置
+                    using var fallbackTarget = anchor.Derive(0, relativeY, anchor.Width, anchor.Height);
                     fallbackTarget.Click();
                     return;
                 }
