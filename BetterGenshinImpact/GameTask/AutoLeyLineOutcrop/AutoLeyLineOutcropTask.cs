@@ -2271,11 +2271,11 @@ public class AutoLeyLineOutcropTask : ISoloTask
     {
         // 判定に使用するキーワードリスト
         var keywords = new List<string> { country };
-        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン", "ンド", "モ" });
+        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン", "ンド", "モ", "依", "頓" });
         else if (country == "璃月") keywords.AddRange(new[] { "璃月", "璃", "月" });
         else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻", "稲", "稻", "妻" });
-        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ", "メール", "ス" });
-        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォンテ", "フォ", "テ", "ヌ" });
+        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ", "メール", "ス", "須", "弥" });
+        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォンテ", "フォ", "テ", "ヌ", "依頓", "依", "頓" });
         else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ", "ナ", "タ" });
         else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド", "クライ", "ナ" });
 
