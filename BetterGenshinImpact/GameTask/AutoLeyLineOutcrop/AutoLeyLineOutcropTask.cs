@@ -239,9 +239,9 @@ public class AutoLeyLineOutcropTask : ISoloTask
         _mapSettingButtonRo = BuildTemplate("Assets/icon/map_setting_button.bmp");
         _handbookTrackActionRo = BuildTemplate("Assets/icon/handbook_track_action_left.png", HandbookTrackActionButtonRoi, 0.72);
 
-        _ocrRo1 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(100), ScaleTo1080(500), ScaleTo1080(400));
+        _ocrRo1 = RecognitionObject.Ocr(ScaleTo1080(700), ScaleTo1080(200), ScaleTo1080(520), ScaleTo1080(200));
         _ocrRo2 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(200), ScaleTo1080(500), ScaleTo1080(400));
-        _ocrRo3 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(400), ScaleTo1080(500), ScaleTo1080(400));
+        _ocrRo3 = RecognitionObject.Ocr(ScaleTo1080(1100), ScaleTo1080(400), ScaleTo1080(400), ScaleTo1080(400));
     }
 
     private static int ScaleTo1080(int value)
