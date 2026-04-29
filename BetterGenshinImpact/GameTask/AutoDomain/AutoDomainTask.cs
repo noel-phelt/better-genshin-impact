@@ -1286,44 +1286,76 @@ public class AutoDomainTask : ISoloTask
 
         var jaResinName = resinName switch
         {
-            "原粹树脂" => "天然樹脂",
-            "浓缩树脂" => "濃縮樹脂",
-            "脆弱树脂" => "脆弱樹脂",
-            "须臾树脂" => "刹那の樹脂",
+            "原粹树脂" => "天然树脂",
+            "浓缩树脂" => "浓缩树脂",
+            "脆弱树脂" => "脆弱树脂",
+            "须臾树脂" => "刹那の树脂",
             _ => resinName
         };
 
-        var resinKey = regionList.FirstOrDefault(t => t.Text.Contains(resinName) || t.Text.Contains(jaResinName) || t.Text.Contains("樹脂") || t.Text.Contains("天然"));
+        // 更加精准的匹配，防止误认
+        var resinKey = regionList.FirstOrDefault(t => 
+        {
+            var text = NormalizeLeyLineOcrText(t.Text);
+            return text.Contains(resinName, StringComparison.Ordinal) || text.Contains(jaResinName, StringComparison.Ordinal);
+        });
+
         if (resinKey != null)
         {
             Logger.LogDebug("找到樹脂名称: {Text} (Target: {Target})", resinKey.Text, resinName);
-            // 找到树脂名称对应的按键，关键词为使用，是同一行的（高度相交）
-            var useList = regionList.Where(t => t.Text.Contains("使用") || t.Text.Contains("使う") || t.Text.Contains("つかう") || t.Text.Contains("決")).ToList();
-            if (useList.Count != 0)
+            
+            // 1. 尝试寻找独立的“使用”按钮
+            var useList = regionList.Where(t => t.Text.Contains("使用") || t.Text.Contains("使う") || t.Text.Contains("つかう") || t.Text.Contains("使") || t.Text.Contains("決")).ToList();
+            var useKey = useList.FirstOrDefault(t => t.X > TaskContext.Instance().SystemInfo.ScaleMax1080PCaptureRect.Width / 2
+                                                     && IsHeightOverlap(t, resinKey)
+                                                     && t != resinKey); // 排除掉自身
+
+            if (useKey == null)
             {
-                // 找到使用按键
-                var useKey = useList.FirstOrDefault(t => t.X > TaskContext.Instance().SystemInfo.ScaleMax1080PCaptureRect.Width / 2
-                                                         && IsHeightOverlap(t, resinKey));
-                if (useKey != null)
+                // 2. 如果没找到独立按钮，检查“使用”文字是否已经合并在名称所在的区域中
+                if (resinKey.Text.Contains("使用") || resinKey.Text.Contains("使う") || resinKey.Text.Contains("使") || resinKey.Text.Contains("決"))
                 {
-                    Logger.LogDebug("找到使用ボタン: {Text}", useKey.Text);
-                    // 点击使用
-                    useKey.Click();
-                    // 解决水龙王按下左键后没松開，然后后续点击按下就没反応了。使用双击
-                    Sleep(60);
-                    useKey.Click();
-                    var num = GetResinNum(resinKey, resinName);
-                    Logger.LogInformation("自动秘境：使用 {ResinName}, 数量：{Num}", resinName, num);
-                    return (true, num);
+                    Logger.LogDebug("按钮文字已包含在名称区域中，尝试点击区域右侧");
+                    useKey = resinKey;
+                }
+            }
+
+            if (useKey != null)
+            {
+                Logger.LogDebug("找到使用ボタン: {Text}", useKey.Text);
+                
+                // 如果是合体区域，点击右侧；如果是独立按钮，点击中心
+                if (useKey == resinKey)
+                {
+                    // 点击该区域右侧 1/4 处，这通常是按钮位置
+                    var clickX = useKey.X + (int)(useKey.Width * 0.85);
+                    var clickY = useKey.Y + useKey.Height / 2;
+                    Simulation.SendInput.Mouse.MoveMouseTo(clickX, clickY);
+                    Simulation.SendInput.Mouse.LeftButtonClick();
                 }
                 else
                 {
-                    Logger.LogWarning("自动秘境：未找到 {ResinName} の使用ボタン (高さ判定失敗)", resinName);
+                    useKey.Click();
                 }
+
+                // 解决水龙王按下左键后没松開，使用双击
+                Sleep(60);
+                if (useKey == resinKey)
+                {
+                    Simulation.SendInput.Mouse.LeftButtonClick();
+                }
+                else
+                {
+                    useKey.Click();
+                }
+
+                var num = GetResinNum(resinKey, resinName);
+                Logger.LogInformation("自动秘境：使用 {ResinName}, 数量：{Num}", resinName, num);
+                return (true, num);
             }
             else
             {
-                Logger.LogWarning("自动秘境：未找到 {ResinName} の使用ボタン (キーワード不一致)", resinName);
+                Logger.LogWarning("自动秘境：未找到 {ResinName} の使用ボタン", resinName);
             }
         }
 
