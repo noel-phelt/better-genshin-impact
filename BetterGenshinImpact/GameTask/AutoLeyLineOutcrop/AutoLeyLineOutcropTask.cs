@@ -2271,11 +2271,11 @@ public class AutoLeyLineOutcropTask : ISoloTask
     {
         // 判定に使用するキーワードリスト
         var keywords = new List<string> { country };
-        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン", "ンド", "モ", "依", "頓" });
+        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン", "ンド", "モ" });
         else if (country == "璃月") keywords.AddRange(new[] { "璃月", "璃", "月" });
         else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻", "稲", "稻", "妻" });
         else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ", "メール", "ス", "須", "弥" });
-        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォンテ", "フォ", "テ", "ヌ", "依頓", "依", "頓" });
+        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォンテ", "フォ", "テ", "ヌ" });
         else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ", "ナ", "タ" });
         else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド", "クライ", "ナ" });
 
@@ -2304,6 +2304,52 @@ public class AutoLeyLineOutcropTask : ISoloTask
                 return matchCount >= (normK.Length + 1) / 2;
             });
         });
+
+        // 日本語環境でのカタカナ誤認識対策：漢字の基準点（璃月、稲妻）から相対位置でクリック
+        if (target == null)
+        {
+            var liyue = list.FirstOrDefault(r => r.Text.Contains("璃月"));
+            var inazuma = list.FirstOrDefault(r => r.Text.Contains("稲妻") || r.Text.Contains("稻妻"));
+            var anchor = liyue ?? inazuma;
+
+            if (anchor != null)
+            {
+                int anchorIndex = liyue != null ? 3 : 4; // 1: おすすめ, 2: モンド, 3: 璃月, 4: 稲妻, 5: スメール, 6: フォンテーヌ, 7: ナタ...
+                int targetIndex = country switch
+                {
+                    "蒙德" or "モンド" => 2,
+                    "璃月" => 3,
+                    "稻妻" or "稲妻" => 4,
+                    "须弥" or "スメール" => 5,
+                    "枫丹" or "楓丹" or "フォンテーヌ" => 6,
+                    "纳塔" or "ナタ" => 7,
+                    _ => -1
+                };
+
+                if (targetIndex != -1 && targetIndex != anchorIndex)
+                {
+                    // 基準点との距離を計算（1080pでのボタン間隔は約70px）
+                    // 実際の間隔を基準点の高さから推測する（より正確にするため）
+                    double step = anchor.Height * 1.5; // おおよその間隔
+                    if (liyue != null && inazuma != null)
+                    {
+                        step = Math.Abs(inazuma.Y - liyue.Y);
+                    }
+
+                    int delta = targetIndex - anchorIndex;
+                    int targetY = (int)(anchor.Y + (delta * step));
+                    _logger.LogInformation("OCRで'{Country}'が見つからないため、基準点'{Anchor}'からの相対座標をクリックします (Index: {TargetIndex})", country, anchor.Text, targetIndex);
+                    
+                    // 基準点の中心X座標を使用
+                    int targetX = anchor.X + (anchor.Width / 2);
+                    
+                    // 一時的なRegionを作成してクリック
+                    using var fallbackTarget = new Region(targetX - 50, targetY - 20, 100, 40);
+                    fallbackTarget.Click();
+                    return;
+                }
+            }
+        }
 
         if (target == null)
         {
