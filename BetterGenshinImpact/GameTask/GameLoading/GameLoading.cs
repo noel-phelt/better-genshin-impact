@@ -347,15 +347,21 @@ public class GameLoadingTrigger : ITaskTrigger
         {
             startRegion.Click();
             biliLoginClicked = true;
-            _logger.LogInformation("OCRにより「開始」ボタン（{Text}）を検出し、自動クリックしました", startRegion.Text);
+            _logger.LogInformation("OCRにより「開始/進む」ボタン（{Text}）を検出し、自動クリックしました", startRegion.Text);
             return;
         }
 
         // 2段階目のクリック（扉）に対応するためのフォールバック
-        // 明確なボタンが見つからない場合でも、年齢制限表示（16+ / 12+）などがあれば扉画面とみなして中央をクリック
-        if (_latestLoadingOcrRegions.Any(r => r.Text.Contains("16+") || r.Text.Contains("12+") || r.Text.Contains("健康") || r.Text.Contains("適齢")))
+        // 明確なボタンとして認識できなくても、画面内に「開始」「進む」「クリック」「16+」などの
+        // ロード画面特有のキーワードが一つでもあれば、扉画面とみなして中央をクリックする
+        if (_latestLoadingOcrRegions.Any(r => 
+            r.Text.Contains("開始") || r.Text.Contains("開始") || 
+            r.Text.Contains("進む") || r.Text.Contains("進") || 
+            r.Text.Contains("クリック") || r.Text.Contains("16+") || 
+            r.Text.Contains("12+") || r.Text.Contains("健康") || 
+            r.Text.Contains("適齢")))
         {
-             _logger.LogInformation("扉画面の可能性が高いため、中央クリックを試行します");
+             _logger.LogInformation("ロード画面（扉）のキーワードを検出したため、中央クリックを試行します");
              GameCaptureRegion.GameRegion1080PPosClick(960, 540);
              return;
         }
