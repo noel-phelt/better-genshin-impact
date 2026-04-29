@@ -1532,14 +1532,23 @@ public class AutoLeyLineOutcropTask : ISoloTask
         var list = capture.FindMulti(_ocrRoThis);
         foreach (var res in list)
         {
-            if (res.Text.Contains("原粹树脂", StringComparison.Ordinal))
+            var text = res.Text;
+            if (text.Contains("原粹树脂", StringComparison.Ordinal) || text.Contains("天然樹脂", StringComparison.Ordinal) || text.Contains("樹脂", StringComparison.Ordinal))
             {
                 return true;
             }
 
-            if (res.Text.Contains("接触", StringComparison.Ordinal)
-                || res.Text.Contains("地脉", StringComparison.Ordinal)
-                || res.Text.Contains("之花", StringComparison.Ordinal))
+            if (text.Contains("浓缩树脂", StringComparison.Ordinal) || text.Contains("濃縮樹脂", StringComparison.Ordinal))
+            {
+                return true;
+            }
+
+            if (text.Contains("接触", StringComparison.Ordinal)
+                || text.Contains("地脉", StringComparison.Ordinal)
+                || text.Contains("地脈", StringComparison.Ordinal)
+                || text.Contains("活性化", StringComparison.Ordinal)
+                || text.Contains("受け取り", StringComparison.Ordinal)
+                || text.Contains("之花", StringComparison.Ordinal))
             {
                 return true;
             }
