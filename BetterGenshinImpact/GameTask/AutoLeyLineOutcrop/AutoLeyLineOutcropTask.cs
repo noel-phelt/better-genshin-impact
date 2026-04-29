@@ -923,7 +923,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
             return true;
         }
 
-        if (ContainsLeyLineFlowerText(result2Text))
+        if (ContainsLeyLineFlowerText(result1Text) || ContainsLeyLineFlowerText(result2Text) || ContainsLeyLineFlowerText(result3Text))
         {
             _logger.LogDebug("识别到地脉之花入口，尝试接触");
             Simulation.SendInput.SimulateAction(GIActions.PickUpOrInteract);
@@ -944,7 +944,9 @@ public class AutoLeyLineOutcropTask : ISoloTask
             }
         }
 
-        if (result2Text.Contains("溢口", StringComparison.Ordinal) || result2Text.Contains("あふれ口", StringComparison.Ordinal) || result2Text.Contains("地豚", StringComparison.Ordinal))
+        if (result1Text.Contains("溢口", StringComparison.Ordinal) || result1Text.Contains("あふれ口", StringComparison.Ordinal) || result1Text.Contains("地豚", StringComparison.Ordinal) ||
+            result2Text.Contains("溢口", StringComparison.Ordinal) || result2Text.Contains("あふれ口", StringComparison.Ordinal) || result2Text.Contains("地豚", StringComparison.Ordinal) ||
+            result3Text.Contains("溢口", StringComparison.Ordinal) || result3Text.Contains("あふれ口", StringComparison.Ordinal) || result3Text.Contains("地豚", StringComparison.Ordinal))
         {
             _logger.LogDebug("識別到溢口或あふれ口提示，嘗試交互");
             Simulation.SendInput.SimulateAction(GIActions.PickUpOrInteract);
@@ -968,6 +970,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
             _logger.LogInformation("未识别到戦闘提示。現在のOCR結果: result1='{Text1}', result2='{Text2}'", result1Text, result2Text);
             _logger.LogDebug("未识别到战斗提示，执行纠偏路径: {Path}", recoverPath);
             await RunPathingFile(recoverPath);
+            await Delay(500, _ct); // 待機時間を設けて花の出現を待つ
             return await ProcessLeyLineOutcrop(timeoutSeconds, targetPath, rerunPath, fromTeleportStart, retries + 1);
         }
 
@@ -2074,7 +2077,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
                || text.Contains("地豚の花", StringComparison.Ordinal)
                || text.Contains("地豚あふれ口", StringComparison.Ordinal)
                || (text.Contains("地豚", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal))
-               || text.Contains("接触", StringComparison.Ordinal);
+               || text.Contains("接触", StringComparison.Ordinal)
+               || text.Contains("触");
     }
 
     private static bool ContainsRewardPromptActionText(string text)
