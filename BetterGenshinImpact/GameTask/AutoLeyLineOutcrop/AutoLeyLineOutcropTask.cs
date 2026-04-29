@@ -1281,7 +1281,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
         var seekEnemyEnabled = _taskParam.FightConfig.SeekEnemyEnabled;
         var seekEnemyInterval = TimeSpan.FromSeconds(Math.Clamp(_taskParam.FightConfig.SeekEnemyIntervalSeconds, 1, 60));
         var seekEnemyRotaryFactor = Math.Clamp(_taskParam.FightConfig.SeekEnemyRotaryFactor, 1, 13);
-        var successKeywords = new[] { "挑战达成", "战斗胜利", "挑战成功", "挑戦成功", "勝利", "挑戦達成", "挑戦クリア" };
+        var successKeywords = new[] { "挑战达成", "战斗胜利", "挑战成功", "挑戦成功", "勝利", "挑戦達成", "挑戦クリア", "達成", "成功", "クリア" };
         var failureKeywords = new[] { "挑战失败", "挑戦失敗" };
 
         while ((DateTime.UtcNow - start).TotalMilliseconds < timeoutMs)
@@ -1297,11 +1297,12 @@ public class AutoLeyLineOutcropTask : ISoloTask
                 foundText = RecognizeFightText(capture);
             }
 
-            if (successKeywords.Any(text.Contains))
-            {
-                // OCR recognizes victory text; treat as success.
-                return true;
-            }
+                _logger.LogDebug("戦闘判定ログ: 勝利判定用(中央)='{Center}', 戦闘中判定用(左)='{Left}'", text, foundText ? "検知あり" : "なし");
+                if (successKeywords.Any(text.Contains))
+                {
+                    _logger.LogInformation("戦闘終了検知（勝利判定一致）: {Text}", text);
+                    return true;
+                }
 
             if (failureKeywords.Any(text.Contains))
             {
