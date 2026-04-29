@@ -43,13 +43,13 @@ public class AutoFightTask : ISoloTask
 
     private DateTime _lastFightFlagTime = DateTime.Now; // 战斗标志最近一次出现的时间
 
-    private readonly double _dpi = TaskContext.Instance().DpiScale;
+    private double _dpi => TaskContext.Instance().IsInitialized ? TaskContext.Instance().DpiScale : 1.0;
     
     public static bool FightStatusFlag { get; set; } = false;
     
     private static readonly object PickLock = new object(); 
     
-    private readonly double _assetScale = TaskContext.Instance().SystemInfo.AssetScale;
+    private double _assetScale => TaskContext.Instance().IsInitialized ? TaskContext.Instance().SystemInfo.AssetScale : 1.0;
     
     private readonly ReturnMainUiTask _returnMainUiTask = new();
 
