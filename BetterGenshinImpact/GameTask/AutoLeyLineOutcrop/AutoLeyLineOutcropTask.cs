@@ -239,9 +239,9 @@ public class AutoLeyLineOutcropTask : ISoloTask
         _mapSettingButtonRo = BuildTemplate("Assets/icon/map_setting_button.bmp");
         _handbookTrackActionRo = BuildTemplate("Assets/icon/handbook_track_action_left.png", HandbookTrackActionButtonRoi, 0.72);
 
-        _ocrRo1 = RecognitionObject.Ocr(ScaleTo1080(800), ScaleTo1080(200), ScaleTo1080(300), ScaleTo1080(100));
-        _ocrRo2 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(200), ScaleTo1080(300), ScaleTo1080(300));
-        _ocrRo3 = RecognitionObject.Ocr(ScaleTo1080(1200), ScaleTo1080(520), ScaleTo1080(300), ScaleTo1080(300));
+        _ocrRo1 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(100), ScaleTo1080(500), ScaleTo1080(400));
+        _ocrRo2 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(200), ScaleTo1080(500), ScaleTo1080(400));
+        _ocrRo3 = RecognitionObject.Ocr(ScaleTo1080(0), ScaleTo1080(400), ScaleTo1080(500), ScaleTo1080(400));
     }
 
     private static int ScaleTo1080(int value)
@@ -962,6 +962,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
                 recoverPath = targetPath;
             }
 
+            _logger.LogInformation("未识别到戦闘提示。現在のOCR結果: result1='{Text1}', result2='{Text2}'", result1Text, result2Text);
             _logger.LogDebug("未识别到战斗提示，执行纠偏路径: {Path}", recoverPath);
             await RunPathingFile(recoverPath);
             return await ProcessLeyLineOutcrop(timeoutSeconds, targetPath, rerunPath, fromTeleportStart, retries + 1);
