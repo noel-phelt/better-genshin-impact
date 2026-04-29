@@ -2271,13 +2271,13 @@ public class AutoLeyLineOutcropTask : ISoloTask
     {
         // 判定に使用するキーワードリスト
         var keywords = new List<string> { country };
-        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン" });
-        else if (country == "璃月") keywords.AddRange(new[] { "璃月" });
-        else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻", "稲", "稻" });
-        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ" });
-        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォ" });
-        else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ" });
-        else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド", "クライ" });
+        if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン", "ンド", "モ" });
+        else if (country == "璃月") keywords.AddRange(new[] { "璃月", "璃", "月" });
+        else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻", "稲", "稻", "妻" });
+        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ", "メール", "ス" });
+        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォンテ", "フォ", "テ", "ヌ" });
+        else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ", "ナ", "タ" });
+        else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド", "クライ", "ナ" });
 
         using var capture = CaptureToRectArea();
         var list = capture.FindMulti(_ocrRoThis);
@@ -2287,18 +2287,21 @@ public class AutoLeyLineOutcropTask : ISoloTask
         _logger.LogDebug("OCR検出テキスト一覧: {Texts}", allTexts);
 
         // いずれかのキーワードが含まれている要素を探す
-        // かなり緩い判定（キーワードが2文字以上の場合、そのうち2文字が含まれていればOKなど）
         var target = list.FirstOrDefault(r => 
         {
-            var normalizedText = r.Text.Replace(" ", "").Replace("　", "");
+            var normalizedText = r.Text.Replace(" ", "").Replace("　", "").Replace("・", "").Replace(".", "").Replace("·", "").Replace(">", "").Replace("|", "");
             return keywords.Any(k => 
             {
                 var normK = k.Replace(" ", "");
                 if (normK.Length <= 1) return normalizedText.Contains(normK);
+                
+                // 完全一致または包含
+                if (normalizedText.Contains(normK)) return true;
+
                 // キーワードの半分以上の文字が含まれていれば一致とみなす（カタカナの誤字対策）
                 int matchCount = 0;
                 foreach(var c in normK) if (normalizedText.Contains(c)) matchCount++;
-                return matchCount >= (normK.Length > 2 ? 2 : 1);
+                return matchCount >= (normK.Length + 1) / 2;
             });
         });
 
