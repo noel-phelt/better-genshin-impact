@@ -1824,15 +1824,16 @@ public class AutoLeyLineOutcropTask : ISoloTask
         }
 
         var lineTexts = BuildPromptTextLines(promptRegions);
-        var isOriginalResinEmpty = lineTexts.Any(text => text.Contains("补充", StringComparison.Ordinal));
+        var isOriginalResinEmpty = lineTexts.Any(text => text.Contains("补充", StringComparison.Ordinal) || text.Contains("補充", StringComparison.Ordinal));
         var hasDoubleReward = lineTexts.Any(text => text.Contains("双倍", StringComparison.Ordinal)
                                                     || text.Contains("2倍产出", StringComparison.Ordinal)
                                                     || text.Contains("2倍", StringComparison.Ordinal));
-        var originalResinLines = lineTexts.Where(text => text.Contains("原粹", StringComparison.Ordinal)).ToList();
-        var hasOriginal20 = !isOriginalResinEmpty && originalResinLines.Any(text => text.Contains("20", StringComparison.Ordinal));
+        // 日本語環境対応：天然樹脂または原粹樹脂が含まれている行を探す
+        var originalResinLines = lineTexts.Where(text => text.Contains("原粹", StringComparison.Ordinal) || text.Contains("天然", StringComparison.Ordinal)).ToList();
+        var hasOriginal20 = !isOriginalResinEmpty && (originalResinLines.Any(text => text.Contains("20", StringComparison.Ordinal)) || originalResinLines.Any(text => text.Contains("天然", StringComparison.Ordinal)));
         var hasOriginal40 = !isOriginalResinEmpty && originalResinLines.Any(text => text.Contains("40", StringComparison.Ordinal));
-        var hasCondensed = lineTexts.Any(text => text.Contains("浓缩", StringComparison.Ordinal));
-        var hasTransient = lineTexts.Any(text => text.Contains("须臾", StringComparison.Ordinal));
+        var hasCondensed = lineTexts.Any(text => text.Contains("浓缩", StringComparison.Ordinal) || text.Contains("濃縮", StringComparison.Ordinal));
+        var hasTransient = lineTexts.Any(text => text.Contains("须臾", StringComparison.Ordinal) || text.Contains("刹那", StringComparison.Ordinal));
         var hasFragile = lineTexts.Any(text => text.Contains("脆弱", StringComparison.Ordinal));
 
         // 双倍奖励下优先切到 40 树脂，避免误用 20 树脂。
@@ -1848,15 +1849,15 @@ public class AutoLeyLineOutcropTask : ISoloTask
                 }
 
                 lineTexts = BuildPromptTextLines(promptRegions);
-                isOriginalResinEmpty = lineTexts.Any(text => text.Contains("补充", StringComparison.Ordinal));
+                isOriginalResinEmpty = lineTexts.Any(text => text.Contains("补充", StringComparison.Ordinal) || text.Contains("補充", StringComparison.Ordinal));
                 hasDoubleReward = lineTexts.Any(text => text.Contains("双倍", StringComparison.Ordinal)
                                                         || text.Contains("2倍产出", StringComparison.Ordinal)
                                                         || text.Contains("2倍", StringComparison.Ordinal));
-                originalResinLines = lineTexts.Where(text => text.Contains("原粹", StringComparison.Ordinal)).ToList();
-                hasOriginal20 = !isOriginalResinEmpty && originalResinLines.Any(text => text.Contains("20", StringComparison.Ordinal));
+                originalResinLines = lineTexts.Where(text => text.Contains("原粹", StringComparison.Ordinal) || text.Contains("天然", StringComparison.Ordinal)).ToList();
+                hasOriginal20 = !isOriginalResinEmpty && (originalResinLines.Any(text => text.Contains("20", StringComparison.Ordinal)) || originalResinLines.Any(text => text.Contains("天然", StringComparison.Ordinal)));
                 hasOriginal40 = !isOriginalResinEmpty && originalResinLines.Any(text => text.Contains("40", StringComparison.Ordinal));
-                hasCondensed = lineTexts.Any(text => text.Contains("浓缩", StringComparison.Ordinal));
-                hasTransient = lineTexts.Any(text => text.Contains("须臾", StringComparison.Ordinal));
+                hasCondensed = lineTexts.Any(text => text.Contains("浓缩", StringComparison.Ordinal) || text.Contains("濃縮", StringComparison.Ordinal));
+                hasTransient = lineTexts.Any(text => text.Contains("须臾", StringComparison.Ordinal) || text.Contains("刹那", StringComparison.Ordinal));
                 hasFragile = lineTexts.Any(text => text.Contains("脆弱", StringComparison.Ordinal));
             }
         }

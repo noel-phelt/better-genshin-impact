@@ -1293,11 +1293,12 @@ public class AutoDomainTask : ISoloTask
             _ => resinName
         };
 
-        var resinKey = regionList.FirstOrDefault(t => t.Text.Contains(resinName) || t.Text.Contains(jaResinName));
+        var resinKey = regionList.FirstOrDefault(t => t.Text.Contains(resinName) || t.Text.Contains(jaResinName) || t.Text.Contains("樹脂") || t.Text.Contains("天然"));
         if (resinKey != null)
         {
+            _logger.LogDebug("找到樹脂名称: {Text} (Target: {Target})", resinKey.Text, resinName);
             // 找到树脂名称对应的按键，关键词为使用，是同一行的（高度相交）
-            var useList = regionList.Where(t => t.Text.Contains("使用") || t.Text.Contains("使う")).ToList();
+            var useList = regionList.Where(t => t.Text.Contains("使用") || t.Text.Contains("使う") || t.Text.Contains("つかう") || t.Text.Contains("決")).ToList();
             if (useList.Count != 0)
             {
                 // 找到使用按键
@@ -1305,9 +1306,10 @@ public class AutoDomainTask : ISoloTask
                                                          && IsHeightOverlap(t, resinKey));
                 if (useKey != null)
                 {
+                    _logger.LogDebug("找到使用ボタン: {Text}", useKey.Text);
                     // 点击使用
                     useKey.Click();
-                    // 解决水龙王按下左键后没松开，然后后续点击按下就没反应了。使用双击
+                    // 解决水龙王按下左键后没松開，然后后续点击按下就没反応了。使用双击
                     Sleep(60);
                     useKey.Click();
                     var num = GetResinNum(resinKey, resinName);
@@ -1316,12 +1318,12 @@ public class AutoDomainTask : ISoloTask
                 }
                 else
                 {
-                    Logger.LogWarning("自动秘境：未找到 {ResinName} 的使用按键", resinName);
+                    _logger.LogWarning("自动秘境：未找到 {ResinName} の使用ボタン (高さ判定失敗)", resinName);
                 }
             }
             else
             {
-                Logger.LogWarning("自动秘境：未找到 {ResinName} 的使用按键", resinName);
+                _logger.LogWarning("自动秘境：未找到 {ResinName} の使用ボタン (キーワード不一致)", resinName);
             }
         }
 
