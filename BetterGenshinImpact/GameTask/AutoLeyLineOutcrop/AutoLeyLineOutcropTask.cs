@@ -457,7 +457,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
                         TargetNode = nextNode,
                         Routes = [next.Route]
                     };
-                    var success = await ExecutePath(path);
+                    success = await ExecutePath(path);
                     if (!success) return;
                     _currentRunTimes++;
                     currentNode = nextNode;
@@ -496,7 +496,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
                         TargetNode = selected.Value.Node,
                         Routes = [selected.Value.Route]
                     };
-                    var success = await ExecutePath(path);
+                    success = await ExecutePath(path);
                     if (!success) return;
                     _currentRunTimes++;
                     currentNode = selected.Value.Node;
