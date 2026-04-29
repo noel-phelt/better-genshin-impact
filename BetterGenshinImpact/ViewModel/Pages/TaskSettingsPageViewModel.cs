@@ -132,8 +132,8 @@ public partial class TaskSettingsPageViewModel : ViewModel
     public static List<int> BossNumList = [1, 2, 3];
 
     public static List<string> AvatarIndexList = ["", "1", "2", "3", "4"];
-    public static List<string> LeyLineOutcropTypeList = ["启示之花", "藏金之花"];
-    public static List<string> LeyLineOutcropCountryList = ["蒙德", "璃月", "稻妻", "须弥", "枫丹", "纳塔", "挪德卡莱"];
+    public static List<string> LeyLineOutcropTypeList = ["啓示の花", "蔵金の花"];
+    public static List<string> LeyLineOutcropCountryList = ["モンド", "璃月", "稲妻", "スメール", "フォンテーヌ", "ナタ", "ナド・クライ"];
 
     [ObservableProperty]
     private List<string> _autoMusicLevelList = ["传说", "大师", "困难", "普通", "所有"];

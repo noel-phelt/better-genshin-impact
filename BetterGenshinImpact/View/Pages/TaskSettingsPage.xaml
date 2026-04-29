@@ -119,7 +119,7 @@
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Margin="0,0,12,0"
-                               Content="脚本仓库"
+                               Content="スクリプト倉庫"
                                Command="{Binding OpenLocalScriptRepoCommand}"
                                Icon="{ui:SymbolIcon Archive24}" />
                     <ComboBox Grid.Row="0"
@@ -421,18 +421,18 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="选择战斗策略"
+                                  Text="戦闘スクリプトの選択"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="用于战斗"
+                                  Text="戦闘に使用するスクリプトを指定します。"
                                   TextWrapping="Wrap" />
                     <ui:Button Grid.Row="0"
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Margin="0,0,12,0"
-                               Content="脚本仓库"
+                               Content="スクリプト倉庫"
                                Command="{Binding OpenLocalScriptRepoCommand}"
                                Icon="{ui:SymbolIcon Archive24}" />
                     <ui:Button Grid.Row="0"
@@ -440,7 +440,7 @@
                                Grid.Column="2"
                                Margin="0,0,12,0"
                                Command="{Binding OpenFightFolderCommand}"
-                               Content="打开目录" />
+                               Content="フォルダを開く" />
                     <ComboBox Grid.Row="0"
                               Grid.RowSpan="2"
                               Grid.Column="3"
@@ -1239,18 +1239,18 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="选择战斗策略"
+                                  Text="戦闘スクリプトの選択"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="用于战斗"
+                                  Text="戦闘に使用するスクリプトを指定します。"
                                   TextWrapping="Wrap" />
                     <ui:Button Grid.Row="0"
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Margin="0,0,12,0"
-                               Content="脚本仓库"
+                               Content="スクリプト倉庫"
                                Command="{Binding OpenLocalScriptRepoCommand}"
                                Icon="{ui:SymbolIcon Archive24}" />
                     <ui:Button Grid.Row="0"
@@ -1258,7 +1258,7 @@
                                Grid.Column="2"
                                Margin="0,0,12,0"
                                Command="{Binding OpenFightFolderCommand}"
-                               Content="打开目录" />
+                               Content="フォルダを開く" />
                     <ComboBox Grid.Row="0"
                               Grid.RowSpan="2"
                               Grid.Column="3"
@@ -1701,18 +1701,18 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="选择战斗策略"
+                                  Text="戦闘スクリプトの選択"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="用于战斗"
+                                  Text="戦闘に使用するスクリプトを指定します。"
                                   TextWrapping="Wrap" />
                     <ui:Button Grid.Row="0"
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Margin="0,0,12,0"
-                               Content="脚本仓库"
+                               Content="スクリプト倉庫"
                                Command="{Binding OpenLocalScriptRepoCommand}"
                                Icon="{ui:SymbolIcon Archive24}" />
                     <ui:Button Grid.Row="0"
@@ -1720,7 +1720,7 @@
                                Grid.Column="2"
                                Margin="0,0,12,0"
                                Command="{Binding OpenFightFolderCommand}"
-                               Content="打开目录" />
+                               Content="フォルダを開く" />
                     <ComboBox Grid.Row="0"
                               Grid.RowSpan="2"
                               Grid.Column="3"
@@ -2308,13 +2308,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="地脉花类型"
+                                  Text="地脈の花の種類"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        选择刷取的地脉花，启示之花（经验书）或藏金之花（摩拉）。
+                        経験値本（啓示の花）かモラ（蔵金の花）を選択します。
                     </ui:TextBlock>
                     <ComboBox Grid.Row="0"
                               Grid.RowSpan="2"
@@ -2336,13 +2336,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="国家"
+                                  Text="地域（国）"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        按国家选择刷取对应的地脉花。
+                        指定した地域の地脈の花を優先的に回ります。
                     </ui:TextBlock>
                     <ComboBox Grid.Row="0"
                               Grid.RowSpan="2"
@@ -2372,18 +2372,18 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="选择战斗策略"
+                                  Text="戦闘スクリプトの選択"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="用于战斗"
+                                  Text="戦闘に使用するスクリプトを指定します。"
                                   TextWrapping="Wrap" />
                     <ui:Button Grid.Row="0"
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Margin="0,0,12,0"
-                               Content="脚本仓库"
+                               Content="スクリプト倉庫"
                                Command="{Binding OpenLocalScriptRepoCommand}"
                                Icon="{ui:SymbolIcon Archive24}" />
                     <ui:Button Grid.Row="0"
@@ -2391,7 +2391,7 @@
                                Grid.Column="2"
                                Margin="0,0,12,0"
                                Command="{Binding OpenFightFolderCommand}"
-                               Content="打开目录" />
+                               Content="フォルダを開く" />
                     <ComboBox Grid.Row="0"
                               Grid.RowSpan="2"
                               Grid.Column="3"
@@ -2419,12 +2419,12 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="根据技能CD优化出招人员"
+                                  Text="スキルCDに基づいた出撃最適化"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="根据填入人或人和cd，来决定当此人元素战技cd未结束时，跳过此人出招，来优化战斗流程，可填入人名或人名数字（用逗号分隔），多种用分号分隔，例如:白术;钟离,12;，如果人名，则用内置cd检查（或填入数字也小于0），如果是人名和数字，则把数字当做出招cd(秒)。"
+                                  Text="指定したキャラクターの元素戦技CDが終わっていない場合、そのキャラをスキップして戦闘を効率化します。キャラ名または番号をカンマ区切りで入力してください。例: 白朮; 鍾離,12;"
                                   TextWrapping="Wrap" />
                     <ui:TextBox Grid.Row="0"
                                 Grid.RowSpan="2"
@@ -2450,7 +2450,7 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="旋转寻找敌人位置"
+                                  Text="周囲の敵を自動索敵"
                                   Margin="0,0,0,10"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
@@ -2460,7 +2460,7 @@
                                   FontTypography="Body"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   FontSize="9"
-                                  Text="旋转速度(建议单次360°左右)："
+                                  Text="索敵時の回転速度（360°程度を推奨）:"
                                   Margin="5,8,0,10"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
@@ -2484,7 +2484,7 @@
                                   VerticalAlignment="Stretch"
                                   Margin="0,0,5,0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="(实验性功能) 战斗时按下方设置的间隔尝试靠近或旋转寻找敌人。"
+                                  Text="(試験的機能) 戦闘中、一定間隔で敵を索敵・追跡します。"
                                   TextWrapping="Wrap" />
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.Column="3"
@@ -2503,12 +2503,12 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="寻敌间隔（秒）"
+                                  Text="索敵間隔（秒）"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="仅在已启用“旋转寻找敌人位置”后生效，最小 1 秒。"
+                                  Text="「周囲の敵を自動索敵」が有効な場合のみ機能します。最小1秒。"
                                   TextWrapping="Wrap" />
                     <ui:NumberBox Grid.Row="0"
                                   Grid.RowSpan="2"
@@ -2536,22 +2536,22 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="聚集材料动作"
+                                  Text="アイテム吸い寄せ（集敵スキル）"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
-                                  Margin="90,0,5,0"
+                                  Margin="160,0,5,0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   FontSize="10"
                                   FontTypography="Body"
                                   VerticalAlignment="Bottom"
-                                  Text="(二次拾取：琴首次拾取空,再次拾取。万叶即使刚使用过技能，也会强制再次拾取。)"
+                                  Text="(万葉や琴がチームにいる場合にスキルでドロップアイテムを集めます。)"
                                   TextWrapping="Wrap" />
 
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="战斗结束后，如存在(万叶/琴)，则执行长E聚集材料动作"
+                                  Text="戦闘終了後、(万葉/琴)のスキル（長押し）を実行します。"
                                   TextWrapping="Wrap" />
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2574,7 +2574,7 @@
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   Margin="0,0,38,26"
                                   FontTypography="Body"
-                                  Text="二次拾取"
+                                  Text="2回実行"
                                   TextWrapping="Wrap" />
                 </Grid>
                 <Grid Margin="16">
@@ -2589,12 +2589,12 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="领取奖励后扫描掉落物光柱"
+                                  Text="報酬受取後にアイテムをスキャン"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="在地脉花领奖完成后，短时间扫描周围掉落物光柱并靠近拾取；不依赖万叶或琴。部分点位或特定配队下可能因移动范围较大而卡住，请按需开启。"
+                                  Text="報酬を受け取った後、周囲のアイテムをスキャンして自動で拾いに行きます。万葉や琴がいなくても動作します。"
                                   TextWrapping="Wrap" />
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2614,12 +2614,12 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="领奖后扫描时长（秒）"
+                                  Text="スキャン時間（秒）"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                  Text="控制领奖后扫描掉落物光柱的最长时长。设为 0 表示不扫描。"
+                                  Text="報酬受取後のアイテムスキャンの最長時間を指定します。0でスキャン停止。"
                                   TextWrapping="Wrap" />
                     <ui:NumberBox Grid.Row="0"
                                   Grid.RowSpan="2"
@@ -2645,13 +2645,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="树脂耗尽模式"
+                                  Text="樹脂消費モード"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        按当前树脂与库存自动计算可刷次数，结束后自动停止。
+                        現在の天然樹脂・濃縮樹脂・在庫アイテムから回数を自動計算し、使い切ると停止します。
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2671,13 +2671,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="刷取次数取小值"
+                                  Text="回数の最小値を採用"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        与手动次数取最小值，避免超过树脂可用次数。
+                        手動で設定した回数と樹脂残量の少ない方を優先し、無駄な周回を防ぎます。
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2697,13 +2697,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="刷取次数"
+                                  Text="周回回数"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        树脂耗尽模式关闭或统计失败时使用的固定次数。
+                        樹脂消費モードがオフの場合や計算に失敗した際に使用する固定回数です。
                     </ui:TextBlock>
                     <ui:NumberBox Grid.Row="0"
                                   Grid.RowSpan="2"
@@ -2726,13 +2726,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="使用须臾树脂"
+                                  Text="過渡樹脂を使用"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        原粹与浓缩耗尽后，允许使用须臾树脂继续刷取。
+                        天然樹脂と濃縮樹脂が尽きた後、過渡樹脂（期限付き）を使用して継続します。
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2752,13 +2752,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="使用脆弱树脂"
+                                  Text="脆弱樹脂を使用"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        原粹与浓缩耗尽后，允许使用脆弱树脂继续刷取。
+                        天然樹脂と濃縮樹脂が尽きた後、脆弱樹脂を使用して継続します。
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2778,15 +2778,15 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="战斗队伍名称"
+                                  Text="戦闘チーム名"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        进入战斗前切换到该队伍，留空则不切换。
+                        戦闘開始前にこのチームに切り替えます。空欄の場合は切り替えません。
                         <LineBreak/>
-                        如果配置了好感队则必须填写。
+                        好感度チームを設定する場合は入力必須です。
                     </ui:TextBlock>
                     <ui:TextBox Grid.Row="0"
                                 Grid.RowSpan="2"
@@ -2809,13 +2809,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="好感队名称"
+                                  Text="好感度チーム名"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        领取奖励前切换到该队伍，留空则不切换。
+                        報酬を受け取る前にこのチームに切り替えます。空欄の場合は切り替えません。
                     </ui:TextBlock>
                     <ui:TextBox Grid.Row="0"
                                 Grid.RowSpan="2"
@@ -2838,13 +2838,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="战斗超时时间（秒）"
+                                  Text="戦闘タイムアウト（秒）"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        到达指定时间后，自动停止战斗。
+                        指定した時間を経過すると戦闘を自動で中止します。
                     </ui:TextBlock>
                     <ui:NumberBox Grid.Row="0"
                                   Grid.RowSpan="2"
@@ -2867,13 +2867,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="不使用冒险之证寻路"
+                                  Text="冒険証を使用せずに尋路（内部ルート）"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        勾选后改用内置路线，不通过冒险之证定位地脉花。
+                        チェックを入れると冒険証を開かず、ツール内部のルートを使って地脈の花を回ります。
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -2893,13 +2893,13 @@
                     <ui:TextBlock Grid.Row="0"
                                   Grid.Column="0"
                                   FontTypography="Body"
-                                  Text="发送通知"
+                                  Text="通知を送信"
                                   TextWrapping="Wrap" />
                     <ui:TextBlock Grid.Row="1"
                                   Grid.Column="0"
                                   Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
                                   TextWrapping="Wrap">
-                        任务完成或失败时通过通知系统发送提醒。
+                        タスクの完了または失敗時に通知システムでリマインドを送信します。
                     </ui:TextBlock>
                     <ui:ToggleSwitch Grid.Row="0"
                                      Grid.RowSpan="2"

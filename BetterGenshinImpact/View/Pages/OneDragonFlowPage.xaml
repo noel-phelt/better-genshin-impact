@@ -1020,12 +1020,12 @@
                                 <ui:TextBlock Grid.Row="0"
                                               Grid.Column="0"
                                               FontTypography="Body"
-                                              Text="{Binding Source='树脂耗尽模式', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='樹脂消費モード', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                                 <ui:TextBlock Grid.Row="1"
                                               Grid.Column="0"
                                               Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                              Text="{Binding Source='按当前树脂与库存自动计算可刷次数，结束后自动停止。', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='現在の樹脂残量から回数を自動計算し、使い切ると停止します。', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                                 <ui:ToggleSwitch Grid.Row="0"
                                                  Grid.RowSpan="2"
@@ -1053,7 +1053,7 @@
                                 <ui:TextBlock Grid.Row="0"
                                               Grid.Column="0"
                                               FontTypography="Body"
-                                              Text="{Binding Source='刷取次数取小值', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='回数の最小値を採用', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                                 <ui:TextBlock Grid.Row="1"
                                               Grid.Column="0"
@@ -1086,12 +1086,12 @@
                                 <ui:TextBlock Grid.Row="0"
                                               Grid.Column="0"
                                               FontTypography="Body"
-                                              Text="{Binding Source='刷取次数', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='周回回数', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                                 <ui:TextBlock Grid.Row="1"
                                               Grid.Column="0"
                                               Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                              Text="{Binding Source='填 0 则使用独立任务配置。', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='0 を入力すると独立タスクの設定を使用します。', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                                 <ui:NumberBox Grid.Row="0"
                                               Grid.RowSpan="2"
@@ -1124,12 +1124,12 @@
                                 <ui:TextBlock Grid.Row="0"
                                               Grid.Column="0"
                                               FontTypography="Body"
-                                              Text="{Binding Source='运行日期配置', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='実行スケジュール設定', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                                 <ui:TextBlock Grid.Row="1"
                                               Grid.Column="0"
                                               Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
-                                              Text="{Binding Source='按星期设置类型与国家', Converter={StaticResource TrConverter}, Mode=OneWay}"
+                                              Text="{Binding Source='曜日ごとに種類と地域を設定します', Converter={StaticResource TrConverter}, Mode=OneWay}"
                                               TextWrapping="Wrap" />
                             </Grid>
                         </ui:CardExpander.Header>

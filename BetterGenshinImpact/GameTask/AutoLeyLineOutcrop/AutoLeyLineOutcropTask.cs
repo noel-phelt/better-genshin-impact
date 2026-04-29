@@ -179,7 +179,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
             throw new Exception("地脈の花の種類が選択されていません");
         }
 
-        if (_taskParam.LeyLineOutcropType != "启示之花" && _taskParam.LeyLineOutcropType != "藏金之花")
+        if (_taskParam.LeyLineOutcropType != "启示之花" && _taskParam.LeyLineOutcropType != "藏金之花" &&
+            _taskParam.LeyLineOutcropType != "啓示の花" && _taskParam.LeyLineOutcropType != "蔵金の花")
         {
             throw new Exception("地脈の花の種類が無効です。再選択してください");
         }
@@ -376,7 +377,15 @@ public class AutoLeyLineOutcropTask : ISoloTask
             throw new Exception("地脈の花の攻略設定が見つかりません");
         }
 
-        if (!_configData.LeyLinePositions.TryGetValue(_taskParam.Country, out var positions))
+        var country = _taskParam.Country;
+        if (country == "モンド") country = "蒙德";
+        else if (country == "稲妻") country = "稻妻";
+        else if (country == "スメール") country = "须弥";
+        else if (country == "フォンテーヌ") country = "枫丹";
+        else if (country == "ナタ") country = "纳塔";
+        else if (country == "ナド・クライ") country = "挪德卡莱";
+
+        if (!_configData.LeyLinePositions.TryGetValue(country, out var positions))
         {
             return false;
         }
