@@ -325,23 +325,25 @@ public class GameLoadingTrigger : ITaskTrigger
         }
 
         // 点击进入游戏按钮
-        var ra = content.CaptureRectArea.Find(_assets.EnterGameRo);
+        using var ra = content.CaptureRectArea.Find(_assets.EnterGameRo);
 
         if (!ra.IsEmpty())
         {
-            TaskContext.Instance().PostMessageSimulator.LeftButtonClickBackground();
+            ra.Click();
             biliLoginClicked = true;
             return;
         }
 
         // OCR fallback for Japanese and English clients
-        if (_latestLoadingOcrRegions.Any(region =>
+        var startRegion = _latestLoadingOcrRegions.FirstOrDefault(region =>
                 region.Text.Contains("開始") || region.Text.Contains("开始") ||
                 region.Text.Contains("Begin", StringComparison.OrdinalIgnoreCase) ||
                 region.Text.Contains("START", StringComparison.OrdinalIgnoreCase) ||
-                region.Text.Contains("クリック")))
+                region.Text.Contains("クリック") || region.Text.Contains("タップ"));
+
+        if (startRegion != null)
         {
-            TaskContext.Instance().PostMessageSimulator.LeftButtonClickBackground();
+            startRegion.Click();
             biliLoginClicked = true;
             _logger.LogInformation("OCRにより「開始」ボタンを検出し、自動クリックしました");
             return;
