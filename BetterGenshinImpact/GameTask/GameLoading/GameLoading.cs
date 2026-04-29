@@ -340,14 +340,24 @@ public class GameLoadingTrigger : ITaskTrigger
                 region.Text.Contains("進む") || region.Text.Contains("進") ||
                 region.Text.Contains("Begin", StringComparison.OrdinalIgnoreCase) ||
                 region.Text.Contains("START", StringComparison.OrdinalIgnoreCase) ||
-                region.Text.Contains("クリック") || region.Text.Contains("タップ"));
+                region.Text.Contains("クリック") || region.Text.Contains("タップ") ||
+                region.Text.Contains("Click", StringComparison.OrdinalIgnoreCase));
 
         if (startRegion != null)
         {
             startRegion.Click();
             biliLoginClicked = true;
-            _logger.LogInformation("OCRにより「開始」ボタンを検出し、自動クリックしました");
+            _logger.LogInformation("OCRにより「開始」ボタン（{Text}）を検出し、自動クリックしました", startRegion.Text);
             return;
+        }
+
+        // 2段階目のクリック（扉）に対応するためのフォールバック
+        // 明確なボタンが見つからない場合でも、年齢制限表示（16+ / 12+）などがあれば扉画面とみなして中央をクリック
+        if (_latestLoadingOcrRegions.Any(r => r.Text.Contains("16+") || r.Text.Contains("12+") || r.Text.Contains("健康") || r.Text.Contains("適齢")))
+        {
+             _logger.LogInformation("扉画面の可能性が高いため、中央クリックを試行します");
+             GameCaptureRegion.GameRegion1080PPosClick(960, 540);
+             return;
         }
 
         // 只有在"进入游戏"按钮未出现时，才进行B服登录处理
