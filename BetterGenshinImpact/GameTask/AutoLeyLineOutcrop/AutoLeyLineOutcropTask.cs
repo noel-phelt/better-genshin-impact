@@ -2269,30 +2269,42 @@ public class AutoLeyLineOutcropTask : ISoloTask
 
     private async Task FindAndClickCountry(string country)
     {
-        // 判定に使用するキーワードリスト（日本語と中国語の両方を含める）
+        // 判定に使用するキーワードリスト
         var keywords = new List<string> { country };
         if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン" });
         else if (country == "璃月") keywords.AddRange(new[] { "璃月" });
         else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻", "稲", "稻" });
         else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ" });
-        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ" });
+        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ", "フォ" });
         else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ" });
         else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド", "クライ" });
 
         using var capture = CaptureToRectArea();
         var list = capture.FindMulti(_ocrRoThis);
         
-        // いずれかのキーワードが画面上のテキストに含まれている要素を探す
-        // OCR結果とキーワードの両方から空白を除去して判定
+        // デバッグ用に検出された全テキストをログ出力
+        var allTexts = string.Join(" | ", list.Select(r => r.Text));
+        _logger.LogDebug("OCR検出テキスト一覧: {Texts}", allTexts);
+
+        // いずれかのキーワードが含まれている要素を探す
+        // かなり緩い判定（キーワードが2文字以上の場合、そのうち2文字が含まれていればOKなど）
         var target = list.FirstOrDefault(r => 
         {
             var normalizedText = r.Text.Replace(" ", "").Replace("　", "");
-            return keywords.Any(k => normalizedText.Contains(k.Replace(" ", ""), StringComparison.OrdinalIgnoreCase));
+            return keywords.Any(k => 
+            {
+                var normK = k.Replace(" ", "");
+                if (normK.Length <= 1) return normalizedText.Contains(normK);
+                // キーワードの半分以上の文字が含まれていれば一致とみなす（カタカナの誤字対策）
+                int matchCount = 0;
+                foreach(var c in normK) if (normalizedText.Contains(c)) matchCount++;
+                return matchCount >= (normK.Length > 2 ? 2 : 1);
+            });
         });
 
         if (target == null)
         {
-            throw new Exception($"冒险之证未找到国家: {country} (検索キーワード: {string.Join(", ", keywords)})");
+            throw new Exception($"冒険の証で国家が見つかりません: {country} (検索キーワード: {string.Join(", ", keywords)})。画面上のテキスト: {allTexts}");
         }
 
         target.Click();
