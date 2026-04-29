@@ -903,15 +903,18 @@ public class AutoLeyLineOutcropTask : ISoloTask
         await Delay(500, _ct);
         _logger.LogDebug("检测地脉花交互状态，重试次数: {Retries}/{MaxRetries}", retries + 1, maxRetries);
         using var capture = CaptureToRectArea();
-        using var ocrOverlayScope = DrawOcrOverlayScope(capture, OcrFlowOverlayKey, _ocrRo2!.RegionOfInterest, _ocrRo3!.RegionOfInterest);
+        using var ocrOverlayScope = DrawOcrOverlayScope(capture, OcrFlowOverlayKey, _ocrRo1!.RegionOfInterest, _ocrRo2!.RegionOfInterest, _ocrRo3!.RegionOfInterest);
         await WaitOcrOverlayRenderTick();
         string result1Text;
         string result2Text;
+        string result3Text;
         var result1 = FindSafe(capture, _ocrRo2!);
         var result2 = FindSafe(capture, _ocrRo3!);
+        var result3 = FindSafe(capture, _ocrRo1!);
         result1Text = result1.Text;
         result2Text = result2.Text;
-        _logger.LogDebug("OCR结果: result1='{Text1}', result2='{Text2}'", result1Text, result2Text);
+        result3Text = result3.Text;
+        _logger.LogDebug("OCR结果: result1='{Text1}', result2='{Text2}', result3='{Text3}'", result1Text, result2Text, result3Text);
 
         if (IsLeyLineRewardReadyState(capture, result1Text, result2Text))
         {
@@ -949,7 +952,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
             Simulation.SendInput.SimulateAction(GIActions.PickUpOrInteract);
             await Delay(500, _ct);
         }
-        else if (!ContainsFightText(result1Text) && !ContainsFightText(result2Text))
+        else if (!ContainsFightText(result1Text) && !ContainsFightText(result2Text) && !ContainsFightText(result3Text))
         {
             var recoverPath = retries == 0
                 ? targetPath
@@ -1281,7 +1284,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
         var seekEnemyEnabled = _taskParam.FightConfig.SeekEnemyEnabled;
         var seekEnemyInterval = TimeSpan.FromSeconds(Math.Clamp(_taskParam.FightConfig.SeekEnemyIntervalSeconds, 1, 60));
         var seekEnemyRotaryFactor = Math.Clamp(_taskParam.FightConfig.SeekEnemyRotaryFactor, 1, 13);
-        var successKeywords = new[] { "挑战达成", "战斗胜利", "挑战成功", "挑戦成功", "勝利", "挑戦達成", "挑戦クリア", "達成", "成功", "クリア" };
+        var successKeywords = new[] { "挑战达成", "战斗胜利", "挑战成功", "挑戦成功", "勝利", "挑戦達成", "挑戦クリア", "達成", "成功", "クリア", "挑" };
         var failureKeywords = new[] { "挑战失败", "挑戦失敗" };
 
         while ((DateTime.UtcNow - start).TotalMilliseconds < timeoutMs)
@@ -1395,7 +1398,7 @@ public class AutoLeyLineOutcropTask : ISoloTask
     private static bool ContainsFightText(string text)
     {
         text = NormalizeLeyLineOcrText(text);
-        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す", "挑戦", "挑戦中", "倒", "到", "Lv", "Lv.", "L v", "/", "0/", "1/", "2/", "3/", "4/", "5/", "6/", "7/", "8/", "9/" };
+        var keywords = new[] { "打倒", "所有", "敌人", "すべての敵を倒す", "すべての敵", "討伐", "敵を倒す", "挑戦", "挑戦中", "挑戦開始", "倒", "到", "開", "始", "/", "0/", "1/", "2/", "3/", "4/", "5/", "6/", "7/", "8/", "9/" };
         // スラッシュが含まれている、またはキーワードが含まれている場合に戦闘中とみなす
         return keywords.Any(text.Contains) || Regex.IsMatch(text, @"\d+/");
     }
