@@ -1459,4 +1459,25 @@ public class AutoDomainTask : ISoloTask
 
         await new AutoArtifactSalvageTask(new AutoArtifactSalvageTaskParam(star, javaScript: null, artifactSetFilter: null, maxNumToCheck: null, recognitionFailurePolicy: null)).Start(_ct);
     }
+
+    private static string NormalizeLeyLineOcrText(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return string.Empty;
+        }
+
+        return text
+            .Replace("脈", "脉", StringComparison.Ordinal)
+            .Replace("觸", "触", StringComparison.Ordinal)
+            .Replace("樹", "树", StringComparison.Ordinal)
+            .Replace("選", "选", StringComparison.Ordinal)
+            .Replace("擇", "择", StringComparison.Ordinal)
+            .Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Replace("\u3000", string.Empty, StringComparison.Ordinal)
+            .Replace("\r", string.Empty, StringComparison.Ordinal)
+            .Replace("\"", string.Empty, StringComparison.Ordinal)
+            .Replace("'", string.Empty, StringComparison.Ordinal)
+            .Trim();
+    }
 }
