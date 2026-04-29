@@ -1965,8 +1965,8 @@ public class AutoLeyLineOutcropTask : ISoloTask
         return text.Contains("激活地脉之花", StringComparison.Ordinal)
                || text.Contains("选择激活方式", StringComparison.Ordinal)
                || text.Contains("地脉之花", StringComparison.Ordinal)
-               || text.Contains("地脈の花を活性化して秘宝を獲得", StringComparison.Ordinal)
-               || text.Contains("地脈の花を活性化", StringComparison.Ordinal)
+               || text.Contains("地脉の花を活性化して秘宝を獲得", StringComparison.Ordinal)
+               || text.Contains("地脉の花を活性化", StringComparison.Ordinal)
                || text.Contains("受け取り方法", StringComparison.Ordinal);
     }
 
@@ -2066,11 +2066,11 @@ public class AutoLeyLineOutcropTask : ISoloTask
         text = NormalizeLeyLineOcrText(text);
         return text.Contains("地脉之花", StringComparison.Ordinal)
                || (text.Contains("地脉", StringComparison.Ordinal) && text.Contains("之花", StringComparison.Ordinal))
-               || text.Contains("地脈の花に接触する", StringComparison.Ordinal)
-               || text.Contains("地脈の花", StringComparison.Ordinal)
-               || text.Contains("地脈あふれ口", StringComparison.Ordinal)
+               || text.Contains("地脉の花に接触する", StringComparison.Ordinal)
+               || text.Contains("地脉の花", StringComparison.Ordinal)
+               || text.Contains("地脉あふれ口", StringComparison.Ordinal)
                || text.Contains("あふれ口", StringComparison.Ordinal)
-               || (text.Contains("地脈", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal))
+               || (text.Contains("地脉", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal))
                || text.Contains("地豚の花", StringComparison.Ordinal)
                || text.Contains("地豚あふれ口", StringComparison.Ordinal)
                || (text.Contains("地豚", StringComparison.Ordinal) && text.Contains("の花", StringComparison.Ordinal))
@@ -2090,19 +2090,17 @@ public class AutoLeyLineOutcropTask : ISoloTask
                || text.Contains("浓缩树脂", StringComparison.Ordinal)
                || text.Contains("须臾树脂", StringComparison.Ordinal)
                || text.Contains("脆弱树脂", StringComparison.Ordinal)
-               || text.Contains("天然樹脂", StringComparison.Ordinal)
-               || text.Contains("濃縮樹脂", StringComparison.Ordinal)
-               || text.Contains("刹那の樹脂", StringComparison.Ordinal)
-               || text.Contains("脆弱樹脂", StringComparison.Ordinal)
+               || text.Contains("天然树脂", StringComparison.Ordinal)
+               || text.Contains("浓缩树脂", StringComparison.Ordinal)
+               || text.Contains("刹那の树脂", StringComparison.Ordinal)
+               || text.Contains("脆弱树脂", StringComparison.Ordinal)
                || text.Contains("激活地脉之花", StringComparison.Ordinal)
                || text.Contains("选择激活方式", StringComparison.Ordinal)
-               || text.Contains("地脈の花を活性化して秘宝を獲得", StringComparison.Ordinal)
-               || text.Contains("地脈の花を活性化", StringComparison.Ordinal)
+               || text.Contains("地脉の花を活性化して秘宝を獲得", StringComparison.Ordinal)
+               || text.Contains("地脉の花を活性化", StringComparison.Ordinal)
                || text.Contains("受け取り方法を選択", StringComparison.Ordinal)
                || (text.Contains("树脂", StringComparison.Ordinal) && text.Contains("使用", StringComparison.Ordinal))
-               || (text.Contains("樹脂", StringComparison.Ordinal) && text.Contains("使用", StringComparison.Ordinal))
-               || text.Contains("补充", StringComparison.Ordinal)
-               || text.Contains("補充", StringComparison.Ordinal);
+               || text.Contains("补充", StringComparison.Ordinal);
     }
 
     private static List<Region> MergeTextRegionsByLine(Region owner, IEnumerable<Region> regions)
