@@ -2270,13 +2270,12 @@ public class AutoLeyLineOutcropTask : ISoloTask
     private async Task FindAndClickCountry(string country)
     {
         // 判定に使用するキーワードリスト（日本語と中国語の両方を含める）
-        // OCRの揺れに備えて、短縮形や部分一致用のキーワードを追加
         var keywords = new List<string> { country };
         if (country == "蒙德" || country == "モンド") keywords.AddRange(new[] { "蒙德", "モンド", "モン" });
         else if (country == "璃月") keywords.AddRange(new[] { "璃月" });
         else if (country == "稻妻" || country == "稲妻") keywords.AddRange(new[] { "稻妻", "稲妻", "稲", "稻" });
-        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメール", "スメ" });
-        else if (country == "枫丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "フォンテーヌ", "フォン", "テーヌ" });
+        else if (country == "须弥" || country == "スメール") keywords.AddRange(new[] { "须弥", "スメール", "スメ" });
+        else if (country == "枫丹" || country == "楓丹" || country == "フォンテーヌ") keywords.AddRange(new[] { "枫丹", "楓丹", "フォンテーヌ", "フォン", "テーヌ" });
         else if (country == "纳塔" || country == "ナタ") keywords.AddRange(new[] { "纳塔", "ナタ" });
         else if (country == "挪德卡莱" || country == "ナド・クライ") keywords.AddRange(new[] { "挪德卡", "ナド", "クライ" });
 
