@@ -98,31 +98,31 @@ public partial class TaskSettingsPageViewModel : ViewModel
     private bool _switchAutoFightEnabled;
 
     [ObservableProperty]
-    private string _switchAutoFightButtonText = "启动";
+    private string _switchAutoFightButtonText = "開始";
 
     [ObservableProperty]
-    private string _switchAutoTrackButtonText = "启动";
+    private string _switchAutoTrackButtonText = "開始";
 
     [ObservableProperty]
-    private string _switchAutoTrackPathButtonText = "启动";
+    private string _switchAutoTrackPathButtonText = "開始";
 
     [ObservableProperty]
     private bool _switchAutoMusicGameEnabled;
 
     [ObservableProperty]
-    private string _switchAutoMusicGameButtonText = "启动";
+    private string _switchAutoMusicGameButtonText = "開始";
 
     [ObservableProperty]
     private bool _switchAutoAlbumEnabled;
 
     [ObservableProperty]
-    private string _switchAutoAlbumButtonText = "启动";
+    private string _switchAutoAlbumButtonText = "開始";
 
     [ObservableProperty]
     private bool _switchAutoCookEnabled;
 
     [ObservableProperty]
-    private string _switchAutoCookButtonText = "启动";
+    private string _switchAutoCookButtonText = "開始";
 
     [ObservableProperty]
     private List<string> _domainNameList;
@@ -148,13 +148,13 @@ public partial class TaskSettingsPageViewModel : ViewModel
     private bool _switchAutoFishingEnabled;
 
     [ObservableProperty]
-    private string _switchAutoFishingButtonText = "启动";
+    private string _switchAutoFishingButtonText = "開始";
 
     [ObservableProperty]
     private bool _switchAutoLeyLineOutcropEnabled;
 
     [ObservableProperty]
-    private string _switchAutoLeyLineOutcropButtonText = "启动";
+    private string _switchAutoLeyLineOutcropButtonText = "開始";
 
     [ObservableProperty]
     private bool _scanDropsAfterRewardEnabledUi;
@@ -678,7 +678,7 @@ public partial class TaskSettingsPageViewModel : ViewModel
     [RelayCommand]
     private async Task OnOpenArtifactSalvageTestOCRWindow()
     {
-        ArtifactOcrDialog ocrDialog = new ArtifactOcrDialog(0.70, 0.112, 0.275, 0.50, "圣遗物分解", this.Config.AutoArtifactSalvageConfig.JavaScript);
+        ArtifactOcrDialog ocrDialog = new ArtifactOcrDialog(0.70, 0.112, 0.275, 0.50, "聖遺物分解", this.Config.AutoArtifactSalvageConfig.JavaScript);
         if (await ocrDialog.CaptureAsync()) { ocrDialog.ShowDialog(); }
     }
 
@@ -688,7 +688,7 @@ public partial class TaskSettingsPageViewModel : ViewModel
         var list = ScriptControlViewModel.LoadAllJsScriptProjects();
         var stackPanel = ScriptControlViewModel.CreateJsScriptSelectionPanel(list, typeof(RadioButton));
 
-        var result = PromptDialog.Prompt("请选择需要复制的JS脚本", "请选择需要复制的JS脚本", stackPanel, new Size(500, 600));
+        var result = PromptDialog.Prompt("コピーするJSスクリプトを選択してください", "コピーするJSスクリプトを選択してください", stackPanel, new Size(500, 600));
         if (!string.IsNullOrEmpty(result))
         {
             string? selectedFolderName = null;
@@ -714,7 +714,7 @@ public partial class TaskSettingsPageViewModel : ViewModel
                 Text = jsCode,
                 IsReadOnly = true
             };
-            var p = new PromptDialog($"{scriptProject.Manifest.Name}\r\n{scriptProject.Manifest.ShortDescription}\r\n\r\n将覆盖现有的JavaScript，是否继续？", $"预览 - {scriptProject.FolderName}", multilineTextBox, null);
+            var p = new PromptDialog($"{scriptProject.Manifest.Name}\r\n{scriptProject.Manifest.ShortDescription}\r\n\r\n既存のJavaScriptを上書きします。続行しますか？", $"プレビュー - {scriptProject.FolderName}", multilineTextBox, null);
             p.Height = 600;
             p.MaxWidth = 800;
             p.ShowDialog();
@@ -783,11 +783,11 @@ public partial class TaskSettingsPageViewModel : ViewModel
             AcceptsReturn = true,
             VerticalAlignment = VerticalAlignment.Stretch,
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-            PlaceholderText = "请在此输入兑换码，每行一条记录"
+            PlaceholderText = "ここにシリアルコードを入力してください（1行に1つ）"
         };
         var p = new PromptDialog(
-            "输入兑换码",
-            "自动使用兑换码",
+            "シリアルコード入力",
+            "シリアルコードの自動適用",
             multilineTextBox,
             null);
         p.Height = 500;
