@@ -337,6 +337,7 @@ public class GameLoadingTrigger : ITaskTrigger
         // OCR fallback for Japanese and English clients
         var startRegion = _latestLoadingOcrRegions.FirstOrDefault(region =>
                 region.Text.Contains("開始") || region.Text.Contains("开始") ||
+                region.Text.Contains("進む") || region.Text.Contains("進") ||
                 region.Text.Contains("Begin", StringComparison.OrdinalIgnoreCase) ||
                 region.Text.Contains("START", StringComparison.OrdinalIgnoreCase) ||
                 region.Text.Contains("クリック") || region.Text.Contains("タップ"));
