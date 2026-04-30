@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BetterGenshinImpact.GameTask;
 using BetterGenshinImpact.GameTask.AutoLeyLineOutcrop;
@@ -198,6 +198,10 @@ public partial class OneDragonFlowConfig : ObservableObject
     // 完成后操作
     [ObservableProperty]
     private string _completionAction = string.Empty;
+
+    // 自动切换语言
+    [ObservableProperty]
+    private bool _autoLanguageSwitch = false;
     
     // 通过当天（4点起始）是哪一天来返回配置
     public (string partyName, string domainName, string sundaySelectedValue) GetDomainConfig()

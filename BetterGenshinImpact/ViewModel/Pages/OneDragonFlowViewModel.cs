@@ -609,6 +609,13 @@ public partial class OneDragonFlowViewModel : ViewModel
         int enabledoneTaskCount = SelectedConfig.TaskEnabledList.Count(t => t.Value);
         _logger.LogInformation($"启用一条龙任务的数量: {enabledoneTaskCount}");
 
+        if (SelectedConfig is { AutoLanguageSwitch: true })
+        {
+            _logger.LogInformation("一条龙启动：自动切换游戏言語为中国語（簡体字）");
+            var gameLanguageService = App.GetService<IGameLanguageService>();
+            await gameLanguageService!.SetGameLanguageAsync(2); // 2: Chinese Simplified
+        }
+
         await ScriptService.StartGameTask();
         SaveConfig();
         int enabledTaskCount = SelectedConfig.TaskEnabledList.Count(t =>
@@ -686,6 +693,13 @@ public partial class OneDragonFlowViewModel : ViewModel
                 Notify.Event(NotificationEvent.DragonEnd).Success("一条龙和配置组任务结束");
             }
             _logger.LogInformation("一条龙和配置组任务结束");
+
+            if (SelectedConfig is { AutoLanguageSwitch: true })
+            {
+                _logger.LogInformation("一条龙结束：自动恢复游戏言語为日本語");
+                var gameLanguageService = App.GetService<IGameLanguageService>();
+                await gameLanguageService!.SetGameLanguageAsync(9); // 9: Japanese
+            }
 
             // 执行完成后操作
             if (SelectedConfig != null && !string.IsNullOrEmpty(SelectedConfig.CompletionAction))

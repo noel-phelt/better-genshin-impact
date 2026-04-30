@@ -1651,6 +1651,36 @@
                         </StackPanel>
                     </ui:CardControl>
                     
+                    <!--  语言设置  -->
+                    <TextBlock Margin="4,0,0,4"
+                               FontSize="14"
+                               Foreground="{DynamicResource SystemAccentColorPrimaryBrush}"
+                               Text="语言设置" />
+                    <ui:CardControl Margin="0,0,0,12">
+                        <ui:CardControl.Icon>
+                            <ui:FontIcon Glyph="&#xe2ca;" Style="{StaticResource FaFontIconStyle}" />
+                        </ui:CardControl.Icon>
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               FontTypography="Body"
+                                               Text="自动切换语言"
+                                               TextWrapping="Wrap" />
+                                <ui:TextBlock Grid.Row="1"
+                                               Grid.Column="0"
+                                               Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
+                                               Text="启动时切为中文，结束时切回日文"
+                                               TextWrapping="Wrap" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:ToggleSwitch Margin="0,0,20,0" IsChecked="{Binding SelectedConfig.AutoLanguageSwitch, Mode=TwoWay}" />
+                    </ui:CardControl>
+
                     <!--  完成后操作  -->
                     <TextBlock Margin="4,0,0,4"
                                FontSize="14"
