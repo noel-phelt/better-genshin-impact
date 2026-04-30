@@ -64,10 +64,10 @@ public partial class CommonSettingsPageViewModel : ViewModel
         Tuple.Create(TimeSpan.FromHours(-5), "美服 UTC-05")
     ];
 
-    private readonly GameLanguageService _gameLanguageService;
+    private readonly IGameLanguageService _gameLanguageService;
 
     public CommonSettingsPageViewModel(IConfigService configService, INavigationService navigationService,
-        NotificationService notificationService, GameLanguageService gameLanguageService)
+        NotificationService notificationService, IGameLanguageService gameLanguageService)
     {
         Config = configService.Get();
         _navigationService = navigationService;
