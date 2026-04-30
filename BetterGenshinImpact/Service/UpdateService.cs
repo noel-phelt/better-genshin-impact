@@ -1,4 +1,4 @@
-﻿using BetterGenshinImpact.Core.Config;
+using BetterGenshinImpact.Core.Config;
 using BetterGenshinImpact.Helpers;
 using BetterGenshinImpact.Helpers.Http;
 using BetterGenshinImpact.Model;
@@ -120,7 +120,7 @@ public class UpdateService : IUpdateService
                         }
                         else
                         {
-                            Process.Start(new ProcessStartInfo("https://cnb.cool/bettergi/better-genshin-impact/-/releases") { UseShellExecute = true });
+                            Process.Start(new ProcessStartInfo("https://github.com/noel-phelt/better-genshin-impact/releases") { UseShellExecute = true });
                         }
                         break;
 
@@ -167,7 +167,7 @@ public class UpdateService : IUpdateService
     {
         if (option.Channel == UpdateChannel.Stable)
         {
-            return await UpdateFromOss();
+            return await UpdateFromGitHub();
         }
         else
         {
@@ -266,28 +266,22 @@ public class UpdateService : IUpdateService
         }
     }
 
-    private async Task<string> UpdateFromOss()
+    private async Task<string> UpdateFromGitHub()
     {
         try
         {
             using HttpClient httpClient = new();
-            Notice? notice = await httpClient.GetFromJsonAsync<Notice>(NoticeUrl);
-            string deviceId = DeviceIdHelper.DeviceId;
-
-            if (notice != null)
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("BetterGI-Updater");
+            var jsonString = await httpClient.GetStringAsync("https://api.github.com/repos/noel-phelt/better-genshin-impact/releases/latest");
+            var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
+            if (jsonDict != null && jsonDict.TryGetValue("tag_name", out var tagName))
             {
-                // 灰度发布逻辑：deviceId做hash取余
-                int hash = deviceId.GetHashCode();
-                int mod = Math.Abs(hash % 10);
-                if (mod < notice.Gray)
-                {
-                    return notice.Version;
-                }
+                return tagName.ToString()?.TrimStart('v') ?? string.Empty;
             }
         }
         catch (Exception e)
         {
-            _ = e;
+            _logger.LogWarning(e, "Failed to check update from GitHub");
         }
 
         return string.Empty;
@@ -301,7 +295,7 @@ public class UpdateService : IUpdateService
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
             string jsonString =
                 await httpClient.GetStringAsync(
-                    "https://api.github.com/repos/babalae/better-genshin-impact/releases/latest");
+                    "https://api.github.com/repos/noel-phelt/better-genshin-impact/releases/latest");
             var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
 
             if (jsonDict != null)
