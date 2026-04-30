@@ -63,12 +63,15 @@ public partial class CommonSettingsPageViewModel : ViewModel
         Tuple.Create(TimeSpan.FromHours(-5), "美服 UTC-05")
     ];
 
+    private readonly GameLanguageService _gameLanguageService;
+
     public CommonSettingsPageViewModel(IConfigService configService, INavigationService navigationService,
-        NotificationService notificationService)
+        NotificationService notificationService, GameLanguageService gameLanguageService)
     {
         Config = configService.Get();
         _navigationService = navigationService;
         _notificationService = notificationService;
+        _gameLanguageService = gameLanguageService;
         InitializeCountries();
         InitializeMiyousheCookie();
         // 初始化OCR模型选择
@@ -82,7 +85,7 @@ public partial class CommonSettingsPageViewModel : ViewModel
     public ObservableCollection<string> MapPathingTypes { get; } = ["SIFT", "TemplateMatch"];
 
     [ObservableProperty] private FrozenDictionary<string, string> _languageDict =
-        new string[] { "zh-Hans", "zh-Hant", "en"}
+        new string[] { "zh-Hans", "zh-Hant", "en", "ja"}
             .ToFrozenDictionary(
                 c => c,
                 c =>
@@ -454,5 +457,37 @@ public partial class CommonSettingsPageViewModel : ViewModel
     {
         Config.OtherConfig.OcrConfig.PaddleOcrModelConfig = value;
         await App.ServiceProvider.GetRequiredService<OcrFactory>().Unload();
+    }
+
+    [RelayCommand]
+    private async Task OnApplyChineseToGameAsync()
+    {
+        var result = await ThemedMessageBox.ShowAsync("将修改原神注册表以将游戏语言设置为简体中文。建议在游戏关闭时進行。\n\n是否继续？", "确认", MessageBoxButton.YesNo, ThemedMessageBox.MessageBoxIcon.Question);
+        if (result != MessageBoxResult.Yes) return;
+
+        if (_gameLanguageService.SetGameLanguage(GameLanguageService.SimplifiedChineseType))
+        {
+            await ThemedMessageBox.InformationAsync("游戏语言已成功设置为简体中文。请重新启动游戏以生效。");
+        }
+        else
+        {
+            await ThemedMessageBox.ErrorAsync("无法设置游戏语言。请确保您已至少启动过一次游戏。");
+        }
+    }
+
+    [RelayCommand]
+    private async Task OnRestoreJapaneseToGameAsync()
+    {
+        var result = await ThemedMessageBox.ShowAsync("将修改原神注册表以将游戏语言恢复为日本語。建议在游戏关闭时進行。\n\n是否继续？", "确认", MessageBoxButton.YesNo, ThemedMessageBox.MessageBoxIcon.Question);
+        if (result != MessageBoxResult.Yes) return;
+
+        if (_gameLanguageService.SetGameLanguage(GameLanguageService.JapaneseType))
+        {
+            await ThemedMessageBox.InformationAsync("游戏语言已成功恢复为日本語。");
+        }
+        else
+        {
+            await ThemedMessageBox.ErrorAsync("无法恢复游戏语言。");
+        }
     }
 }
