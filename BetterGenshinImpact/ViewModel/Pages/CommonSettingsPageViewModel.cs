@@ -107,9 +107,9 @@ public partial class CommonSettingsPageViewModel : ViewModel
             throw new InvalidOperationException("当前UI语言为空，无法更新语言文件。");
         }
 
-        if (cultureName == "zh-Hans")
+        if (cultureName == "zh-Hans" || cultureName == "ja")
         {
-            await ThemedMessageBox.InformationAsync("zh-Hans 无语言文件，无需更新。");
+            await ThemedMessageBox.InformationAsync($"{cultureName} 无语言文件，无需更新。");
             return;
         }
 
