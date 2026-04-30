@@ -166,7 +166,7 @@ public partial class App : Application
                 services.AddSingleton<IKongyingTavernApiService, KongyingTavernApiService>();
                 services.AddSingleton<IHoYoLabMapApiService, HoYoLabMapApiService>();
                 services.AddSingleton<IMaskMapPointService, MaskMapPointService>();
-                services.AddSingleton<GameLanguageService>();
+                services.AddSingleton<IGameLanguageService, GameLanguageService>();
 
                 services.AddSingleton(TimeProvider.System);
                 services.AddSingleton<IServerTimeProvider, ServerTimeProvider>();

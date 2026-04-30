@@ -7,12 +7,20 @@ using BetterGenshinImpact.Genshin.Settings2;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
+using BetterGenshinImpact.Service.Interface;
+using System.Threading.Tasks;
+
 namespace BetterGenshinImpact.Service;
 
-public class GameLanguageService
+public class GameLanguageService : IGameLanguageService
 {
     public const int SimplifiedChineseType = 2;
     public const int JapaneseType = 9;
+
+    public Task<bool> SetGameLanguageAsync(int langId)
+    {
+        return Task.FromResult(SetGameLanguage(langId));
+    }
 
     public bool SetGameLanguage(int langId)
     {
