@@ -25,6 +25,7 @@ using BetterGenshinImpact.GameTask.LogParse;
 using BetterGenshinImpact.Helpers;
 using BetterGenshinImpact.Helpers.Http;
 using BetterGenshinImpact.Model;
+using BetterGenshinImpact.Service;
 using BetterGenshinImpact.Service.Interface;
 using BetterGenshinImpact.Service.Notification;
 using BetterGenshinImpact.View.Controls.Webview;
