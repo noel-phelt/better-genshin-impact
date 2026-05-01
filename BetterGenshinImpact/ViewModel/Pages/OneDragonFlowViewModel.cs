@@ -616,11 +616,9 @@ public partial class OneDragonFlowViewModel : ViewModel
             await gameLanguageService!.SetGameLanguageAsync(2); // 2: Chinese Simplified
         }
 
-        bool wasHdrEnabled = false;
         if (SelectedConfig is { AutoHdrSwitch: true })
         {
-            wasHdrEnabled = HdrHelper.IsHdrEnabled();
-            if (wasHdrEnabled)
+            if (HdrHelper.IsHdrEnabled())
             {
                 _logger.LogInformation("一条龙启动：检测到HDR开启，自动关闭HDR");
                 HdrHelper.SetHdrState(false, _logger);
@@ -712,7 +710,7 @@ public partial class OneDragonFlowViewModel : ViewModel
                 await gameLanguageService!.SetGameLanguageAsync(9); // 9: Japanese
             }
 
-            if (SelectedConfig is { AutoHdrSwitch: true } && wasHdrEnabled)
+            if (SelectedConfig is { AutoHdrSwitch: true })
             {
                 _logger.LogInformation("一条龙结束：自动恢复HDR为开启状态");
                 HdrHelper.SetHdrState(true, _logger);
