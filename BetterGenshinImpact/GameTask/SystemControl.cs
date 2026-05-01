@@ -377,16 +377,4 @@ public class SystemControl
             Debug.WriteLine($"Shutdown方法执行出错: {ex.Message}");
         }
     }
-
-    public static void Sleep()
-    {
-        try
-        {
-            Process.Start("rundll32.exe", "powrprof.dll,SetSuspendState 0,1,0");
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Sleep方法执行出错: {ex.Message}");
-        }
-    }
 }
