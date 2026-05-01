@@ -49,7 +49,7 @@ public class AutoFightTask : ISoloTask
     
     private static readonly object PickLock = new object(); 
     
-    private readonly double _assetScale = TaskContext.Instance().SystemInfo.AssetScale;
+    private double _assetScale => TaskContext.Instance().SystemInfo.AssetScale;
     
     private readonly ReturnMainUiTask _returnMainUiTask = new();
 
