@@ -202,6 +202,10 @@ public partial class OneDragonFlowConfig : ObservableObject
     // 自动切换语言
     [ObservableProperty]
     private bool _autoLanguageSwitch = false;
+
+    // 自动开关HDR
+    [ObservableProperty]
+    private bool _autoHdrSwitch = false;
     
     // 通过当天（4点起始）是哪一天来返回配置
     public (string partyName, string domainName, string sundaySelectedValue) GetDomainConfig()

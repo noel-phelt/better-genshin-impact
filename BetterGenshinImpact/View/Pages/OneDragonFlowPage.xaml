@@ -1680,6 +1680,36 @@
                         </ui:CardControl.Header>
                         <ui:ToggleSwitch Margin="0,0,20,0" IsChecked="{Binding SelectedConfig.AutoLanguageSwitch, Mode=TwoWay}" />
                     </ui:CardControl>
+                    
+                    <!--  HDR设置  -->
+                    <TextBlock Margin="4,0,0,4"
+                               FontSize="14"
+                               Foreground="{DynamicResource SystemAccentColorPrimaryBrush}"
+                               Text="HDR设置" />
+                    <ui:CardControl Margin="0,0,0,12">
+                        <ui:CardControl.Icon>
+                            <ui:FontIcon Glyph="&#xf108;" Style="{StaticResource FaFontIconStyle}" />
+                        </ui:CardControl.Icon>
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               FontTypography="Body"
+                                               Text="自动开关HDR"
+                                               TextWrapping="Wrap" />
+                                <ui:TextBlock Grid.Row="1"
+                                               Grid.Column="0"
+                                               Foreground="{ui:ThemeResource TextFillColorTertiaryBrush}"
+                                               Text="启动时自动关闭HDR，结束时恢复开启"
+                                               TextWrapping="Wrap" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:ToggleSwitch Margin="0,0,20,0" IsChecked="{Binding SelectedConfig.AutoHdrSwitch, Mode=TwoWay}" />
+                    </ui:CardControl>
 
                     <!--  完成后操作  -->
                     <TextBlock Margin="4,0,0,4"

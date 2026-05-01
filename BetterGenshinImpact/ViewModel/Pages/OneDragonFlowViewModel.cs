@@ -616,6 +616,17 @@ public partial class OneDragonFlowViewModel : ViewModel
             await gameLanguageService!.SetGameLanguageAsync(2); // 2: Chinese Simplified
         }
 
+        bool wasHdrEnabled = false;
+        if (SelectedConfig is { AutoHdrSwitch: true })
+        {
+            wasHdrEnabled = HdrHelper.IsHdrEnabled();
+            if (wasHdrEnabled)
+            {
+                _logger.LogInformation("一条龙启动：检测到HDR开启，自动关闭HDR");
+                HdrHelper.SetHdrState(false, _logger);
+            }
+        }
+
         await ScriptService.StartGameTask();
         SaveConfig();
         int enabledTaskCount = SelectedConfig.TaskEnabledList.Count(t =>
@@ -699,6 +710,12 @@ public partial class OneDragonFlowViewModel : ViewModel
                 _logger.LogInformation("一条龙结束：自动恢复游戏言語为日本語");
                 var gameLanguageService = App.GetService<IGameLanguageService>();
                 await gameLanguageService!.SetGameLanguageAsync(9); // 9: Japanese
+            }
+
+            if (SelectedConfig is { AutoHdrSwitch: true } && wasHdrEnabled)
+            {
+                _logger.LogInformation("一条龙结束：自动恢复HDR为开启状态");
+                HdrHelper.SetHdrState(true, _logger);
             }
 
             // 执行完成后操作
