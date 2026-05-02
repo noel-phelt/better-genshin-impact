@@ -703,19 +703,6 @@ public partial class OneDragonFlowViewModel : ViewModel
             }
             _logger.LogInformation("一条龙和配置组任务结束");
 
-            if (SelectedConfig is { AutoLanguageSwitch: true })
-            {
-                _logger.LogInformation("一条龙结束：自动恢复游戏言語为日本語");
-                var gameLanguageService = App.GetService<IGameLanguageService>();
-                await gameLanguageService!.SetGameLanguageAsync(9); // 9: Japanese
-            }
-
-            if (SelectedConfig is { AutoHdrSwitch: true })
-            {
-                _logger.LogInformation("一条龙结束：自动恢复HDR为开启状态");
-                HdrHelper.SetHdrState(true, _logger);
-            }
-
             // 执行完成后操作
             if (SelectedConfig != null && !string.IsNullOrEmpty(SelectedConfig.CompletionAction))
             {
@@ -733,6 +720,24 @@ public partial class OneDragonFlowViewModel : ViewModel
                         SystemControl.Shutdown();
                         break;
                 }
+
+                if (SelectedConfig.CompletionAction.Contains("关闭游戏") || SelectedConfig.CompletionAction.Contains("关机"))
+                {
+                    await Task.Delay(2000);
+                }
+            }
+
+            if (SelectedConfig is { AutoLanguageSwitch: true })
+            {
+                _logger.LogInformation("一条龙结束：自动恢复游戏言語为日本語");
+                var gameLanguageService = App.GetService<IGameLanguageService>();
+                await gameLanguageService!.SetGameLanguageAsync(9); // 9: Japanese
+            }
+
+            if (SelectedConfig is { AutoHdrSwitch: true })
+            {
+                _logger.LogInformation("一条龙结束：自动恢复HDR为开启状态");
+                HdrHelper.SetHdrState(true, _logger);
             }
         });
     }
